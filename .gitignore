@@ -1,5 +1,2 @@
-target/*
-src/main/webapp/node_modules
-/*
+target/
 src/main/webapp/react/node_modules
-/*

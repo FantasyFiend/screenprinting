@@ -102,4 +102,9 @@ public class ShopModule {
         }
         return sqr;
     }
+
+    public SwyQueryResult getCommodityById(@Param("id") int id){
+	    SwyQueryResult sqr = new SwyQueryResult();
+	    return sqr;
+    }
 }
