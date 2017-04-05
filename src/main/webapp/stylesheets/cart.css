@@ -1,0 +1,369 @@
+.cart_div{
+	width:100%;
+	min-width: 1170px;
+}
+.empty_cart{
+	width: 100%;
+	height: 200px;
+	line-height: 200px;
+	font-size: 30px;
+	text-align: center;
+}
+.cart_title{
+	width:100%;
+	height:50px;
+	border-bottom:1px solid #000;
+	margin-top:30px;
+	min-width: 1170px;
+}
+.cart_title span{
+	display: inline-block;
+	width:120px;
+	height:50px;
+	line-height: 50px;
+	text-align: center;
+	color:#fff;
+	background-color: #000;
+	font-size: 20px;
+	margin-left:20px;
+}
+.cart_item_name{
+	border:1px solid #eee;
+	margin-top:20px;
+}
+.cart_item_name span{
+	display: inline-block;
+	padding:5px 10px;
+	color:#a2a2a2;
+}
+.name_commodity_info{
+	width:500px;
+}
+.name_price{
+	width:120px;
+}
+.name_amount{
+	width:120px;
+}
+.name_total{
+	width:120px;
+}
+.cart_item{
+	margin-top:20px;
+	height:100px;
+	width:100%;
+}
+.cart_item span{
+	display: inline-block;
+	float:left;
+}
+.item_img{
+	width:100px;
+	height:100%;
+	cursor:pointer;
+}
+.item_img img{
+	width:100%;
+	height:100%;
+}
+.item_info{
+	width:350px;
+	height:100%;
+	margin-left:20px;
+}
+.item_info span{
+	width:100%;
+	height:33%;
+	line-height: 33px;
+}
+.item_description{
+	cursor:pointer;
+}
+.item_price{
+	margin-left:25px;
+	width:60px;
+	height:100%;
+	line-height: 100px;
+	text-align: center;
+	color:#000;
+}
+.item_amount{
+	margin-left:60px;
+	width:60px;
+	margin-top:35px;
+	height:30px;
+	line-height: 30px;
+	text-align: center;
+}
+.item_amount input{
+	text-align: center;
+	width:67px;
+}
+.item_total{
+	margin-left:60px;
+	width:60px;
+	height:100%;
+	line-height: 100px;
+	text-align: center;
+	color:#000;
+}
+.item_delete{
+	margin-left:200px;
+	width:20px;
+	height:20px;
+	line-height: 18px;
+	margin-top:40px;
+	text-align: center;
+	border:1px solid #a2a2a2;
+	cursor:pointer;
+	color:#a2a2a2;
+}
+.item_delete:hover{
+	border-color: #000;
+	background-color: #000;
+	color:#fff;
+}
+.item_delete i{
+	font-size: 12px;
+}
+.order_total .express_fee{
+	font-size: 14px;
+}
+.order_total{
+	width:100%;
+	height:50px;
+	margin-top:20px;
+}
+.order_total span{
+	display: inline-block;
+	height:50px;
+	padding:0 10px;
+	color:#000;
+	font-size: 20px;
+	line-height: 50px;
+	float: right;
+	margin-right:50px;
+}
+.final_total{
+	width:100%;
+	height:50px;
+	margin-top:20px;
+}
+.final_total span{
+	display: inline-block;
+	float: right;
+	margin-right:50px;
+	height: 50px;
+	line-height: 50px;
+	padding: 0 10px;
+}
+.promotion{
+	font-size: 14px;
+}
+.final_total_span{
+	font-size: 20px;
+	color: #c40000;
+}
+.address_list .address_span{
+	display: inline-block;
+	width:250px;
+	height:160px;
+	cursor:pointer;
+	float:left;
+	border:2px solid #fff;
+	color:#000;
+	position: relative;
+	margin-bottom:20px;
+}
+.address_list .address_span:hover{
+	border-color:#000;
+}
+.address_list .address_span{
+	margin-right:35px;
+	padding:3px 5px;
+	border-color: #ddd;
+}
+.address_list .active_address_span{
+	margin-right:35px;
+	padding:3px 5px;
+	border-color:#000;
+}
+.add_address_span{
+	background-color: #e6e6e6;
+	font-size: 100px;
+	line-height: 140px;
+	text-align: center;
+}
+.address_list .address_span .update_address_button{
+	display: inline-block;
+	width:50px;
+	height:20px;
+	line-height: 20px;
+	float:right;
+	text-align: center;
+	border:0;
+	color:#a2a2a2;
+	position: absolute;
+	right:10px;
+	bottom:10px;
+}
+.address_list .address_span .update_address_button:hover{
+	border:0;
+	color:#000;
+}
+.address_title{
+	margin-bottom:20px;
+	width:100%;
+	height:50px;
+	border-bottom:1px solid #000;
+	margin-top:30px;
+	min-width: 1170px;
+}
+.address_title span{
+	display: inline-block;
+	width:120px;
+	height:50px;
+	line-height: 50px;
+	text-align: center;
+	color:#fff;
+	background-color: #000;
+	font-size: 20px;
+	margin-left:20px;
+}
+.address_form_div{
+	position:fixed;
+	top:0;
+	left:0;
+	right:0;
+	bottom:9999px;
+	z-index: 5;
+	background-color: rgba(0,0,0,.3);
+	transition:bottom .2s ease-in;
+	-webkit-transition:bottom .3s ease-in;
+	-moz-transition:bottom .2s ease-in;
+	-ms-transition:bottom .2s ease-in;
+	-o-transition:bottom .2s ease-in;
+	overflow: hidden;
+}
+.address_form{
+	width:500px;
+	height:380px;
+	position: absolute;
+	top:50%;
+	left:50%;
+	margin-left:-250px;
+	margin-top:-175px;
+	background-color: #fff;
+	padding:25px;
+}
+.address_form table{
+	width:450px;
+	height:300px;
+}
+.address_form_title{
+	width:100px;
+	text-align: right;
+}
+.address_form_input{
+	text-align: left;
+}
+.select_td{
+	text-align: left;
+}
+.address_form_input input{
+	width:90%;
+	padding:6px;
+	border:1px solid #dedede;
+}
+.address_form_input input:focus{
+	border-bottom:3px solid #000;
+	padding:5px;
+}
+.address_select{
+	padding:6px;
+	margin:0 10px 0 0;
+}
+.detail_textarea{
+	text-align: left;
+}
+.detail_textarea textarea{
+	padding:6px;
+	border:1px solid #dedede;
+	resize: none;
+}
+.detail_address_title{
+	vertical-align:top;
+	padding-top:15px;
+}
+.close_button{
+	position: absolute;
+	right:5px;
+	top:5px;
+	float:right;
+	padding:5px;
+	cursor: pointer;
+}
+.close_button:hover{
+	background-color: #000;
+	color:#fff;
+}
+.submit_button span{
+	display: inline-block;
+	padding:8px 15px;
+	border-radius:3px;
+	text-align: center;
+	cursor:pointer;
+	border:0;
+	float:right;
+	margin-right:30px;
+}
+.submit_button span:hover{
+	background-color: #101010;
+	color:#fff;
+}
+.submit_button .save{
+	background-color: #000;
+	color:#fff;
+}
+.submit_button .cancel{
+	background-color: #fff;
+	color:#000;
+	border:1px solid #101010;
+}
+.method_choice_span{
+	display: inline-block;
+	width:200px;
+	height:50px;
+	margin-right: 30px;
+}
+.method_choice_span img{
+	width:150px;
+	height:100%;
+	margin-left:10px;
+	margin-top:-5px;
+}
+.submit_order_div{
+	margin-top:10px;
+}
+.submit_order_div span{
+	display:inline-block;
+	padding:7px 20px;
+	float: right;
+	margin-right: 30px;
+	cursor: pointer;
+	background-color: #000;
+	color:#fff;
+	border-radius:3px;
+	font-size: 20px;
+}
+.submit_order_div span:hover{
+	background-color: #101010;
+}
+.remark_div{
+	margin-bottom:20px;
+}
+.remark_div input{
+	width:50%;
+	padding:6px;
+	border:1px solid #dedede;
+}

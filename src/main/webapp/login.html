@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>登录/注册</title>
+	<meta name="keywords" content="screenprinting,workshop,training">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+    <link rel="stylesheet"  href="./stylesheets/bootstrap.min.css">
+    <!--<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">-->
+    <link rel='stylesheet' href='./stylesheets/style.css' />
+    <script src="./javascripts/jquery.min.js"></script>
+    <script src="./javascripts/bootstrap.min.js"></script>
+    <script src="./javascripts/function.js"></script>
+    <script src="./javascripts/react-with-addons.min.js"></script>
+    <script src="./javascripts/react-dom.min.js"></script>
+</head>
+<body>
+<div class="container" style="height: 50px;"></div>
+<div class="container" id="nav_container"></div>
+<script src="./react/build/nav_build.js"></script>
+<div class="container" style="margin-top: 20px;">
+    <div class="row">
+        <div class="col-xs-12 col-sm-6">
+            <div class="login-container">
+                <div class="title">登录</div>
+                <form id="loginForm">
+                    <div class="input-group">
+                        <span class="input-group-addon">@</span>
+                        <input type="email" class="form-control" placeholder="邮箱" id="loginEmail">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                        <input type="password" class="form-control" placeholder="密码" id="loginPassword">
+                    </div>
+                    <div class="input-group" style="width: 100%;">
+                        <input type="button" class="btn btn-success" value="登录" id="loginSubmit" style="width: 50%;">
+                        <a href="/user/forgetPassword" style="margin-left: 15px;">忘记密码?</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+            <div class="register-container">
+                <div class="title">注册</div>
+                <form action="/service/register" id="registerForm">
+                    <div class="input-group">
+                        <span class="input-group-addon">@</span>
+                        <input type="email" class="form-control" placeholder="邮箱" id="registerEmail" name="email">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                        <input type="text" class="form-control" placeholder="昵称" id="nickname" name="nickname">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                        <input type="password" class="form-control" placeholder="密码" id="registerPassword" name="password">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                        <input type="password" class="form-control" placeholder="确认密码" id="registerPassword2">
+                    </div>
+                    <div class="input-group" style="width: 100%;">
+                        <input type="button" class="btn btn-success" value="注册" id="registerSubmit" style="width: 100%;">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container" id="bottom_container"></div>
+<script src="./react/build/nav_bottom_build.js"></script>
+</body>
+<script>
+    $(document).ready(function(){
+        $("#loginSubmit").on("click", function(){
+            var email = $("#loginEmail").val();
+            var password = $("#loginPassword").val();
+            $.ajax({
+                type:"post",
+                url:"service/shop/login",
+                data:{email:email, password:password},
+                success:function(msg){
+                    if (msg === "success") {
+                        var path = getQueryString("from");
+                        if (path == null) {
+                            path = "/"
+                        }
+                        window.location.href = path;
+                    } else{
+                        alert (msg);
+                    }
+                }
+            });
+        });
+        $("#registerSubmit").on("click", function(){
+            var email = $("#registerEmail").val();
+            var nickname = $("#nickname").val();
+            var password1 = $("#registerPassword").val();
+            var password2 = $("#registerPassword2").val();
+            if (checkRegisterForm(email, nickname, password1, password2)) {
+                $.ajax({
+                    type:"post",
+                    url:"service/shop/register",
+                    data:{email:email, nickname:nickname, password:password1},
+                    success:function(msg){
+                        if (msg === "success") {
+                            var path = getQueryString("from");
+                            if (path == null) {
+                                path = "index.html"
+                            }
+                            window.location.href = path;
+                        } else{
+                            alert (msg);
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>
