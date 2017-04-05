@@ -25,4 +25,6 @@ public interface ShopService {
     int getCartCount(int userId);
 
     int addToCart(int userId, int commodityId, int amount);
+
+    SwyCommodity getCommodityById(int id);
 }

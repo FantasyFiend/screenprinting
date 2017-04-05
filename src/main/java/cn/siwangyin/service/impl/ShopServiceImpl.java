@@ -121,4 +121,9 @@ public class ShopServiceImpl implements ShopService {
         int count = getCartCount(userId);
         return count;
     }
+
+    @Override
+    public SwyCommodity getCommodityById(int id) {
+        return dao.fetch(SwyCommodity.class, id);
+    }
 }

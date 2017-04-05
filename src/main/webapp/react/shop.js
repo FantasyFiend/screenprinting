@@ -121,7 +121,7 @@ var List = React.createClass({
             var commodity = this.state.list[i];
             divs.push(<div className="col-xs-6 col-sm-6 col-md-4 col-lg-4">
                         <div className="thumbnail">
-                            <a href={"/commodity?id=" + commodity.id}><img src={commodity.imgPath} alt={commodity.name}/></a>
+                            <a href={"/commodity.html?id=" + commodity.id}><img src={commodity.imgPath} alt={commodity.name}/></a>
                             <div className="caption">
                                 <h6>{commodity.name}</h6>
                                 <p>{"￥" + commodity.price}</p>

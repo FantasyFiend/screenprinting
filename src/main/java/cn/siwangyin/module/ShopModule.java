@@ -103,8 +103,11 @@ public class ShopModule {
         return sqr;
     }
 
+    @At
+    @Ok("json")
     public SwyQueryResult getCommodityById(@Param("id") int id){
 	    SwyQueryResult sqr = new SwyQueryResult();
+	    sqr.getMap().put("commodity",shopService.getCommodityById(id));
 	    return sqr;
     }
 }

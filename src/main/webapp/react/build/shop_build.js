@@ -157,7 +157,7 @@ var List = React.createClass({
                     { className: "thumbnail" },
                     React.createElement(
                         "a",
-                        { href: "/commodity?id=" + commodity.id },
+                        { href: "/commodity.html?id=" + commodity.id },
                         React.createElement("img", { src: commodity.imgPath, alt: commodity.name })
                     ),
                     React.createElement(
