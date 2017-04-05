@@ -6,7 +6,8 @@ var Nav = React.createClass({
 	getInitialState:function(){
 		return {
 			user:null,
-			list:[]
+			list:[],
+			count:0
 		};
 	},
 	componentWillMount:function(){
@@ -14,7 +15,7 @@ var Nav = React.createClass({
 			type:"get",
 			url:"service/shop/getSessionUserAndNavType",
 			success:function(data){
-				this.setState({user:data.map.user, list:data.list});
+				this.setState({user:data.map.user, list:data.list, count:data.map.count});
 			}.bind(this)
 		});
 	},
@@ -64,7 +65,7 @@ var Nav = React.createClass({
 				                </ul>
 				                <ul className="nav navbar-nav navbar-right">
 				                    <li><a href={login.href}>{login.text}</a></li>
-				                    <li><a href="cart.html"><span className="glyphicon glyphicon-shopping-cart"></span></a></li>
+				                    <li><a href="cart.html"><span className="glyphicon glyphicon-shopping-cart"></span>&nbsp;&nbsp;<span className="badge" id="cartBadge">{this.state.count}</span></a></li>
 				                </ul>
 				                <form className="navbar-form navbar-right">
 				                    <div className="input-group">

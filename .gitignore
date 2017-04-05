@@ -1,3 +1,5 @@
-/target
-/src/main/webapp/node_modules
-/src/main/webapp/react/node_modules
+target/*
+src/main/webapp/node_modules
+/*
+src/main/webapp/react/node_modules
+/*

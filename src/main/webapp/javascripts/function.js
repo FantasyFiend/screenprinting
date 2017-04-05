@@ -105,34 +105,23 @@ function checkRegisterForm(email, nickname, password1, password2){
 }
 function formatTags(tags) {
     var map = new Object();
-    map.normalTags = new Array();
     if (typeof (tags) === "object" && tags.length > 0) {
         for (var i = 0; i < tags.length; i++) {
             var tag = tags[i];
-            if (tag.parent === "ns" || tag.parent === "nh") {
-                map[tag.name]= tag;
-                map[tag.name].children = new Array();
+            if (tag.parentId === 0) {
+                map[tag.id]= tag;
+                map[tag.id].children = new Array();
             }
         }
         for (var i = 0; i < tags.length; i++) {
             var tag = tags[i];
-            if (tag.parent !== "ns" && tag.parent !== "nh") {
-                var parent = map[tag.parent];
+            if (tag.parent !== 0) {
+                var parent = map[tag.parentId];
                 if (parent != null) {
                     parent["children"].push(tag);
-                }else{
-                    map["normalTags"].push(tag);
                 }
             }
         }
-    }
-    return map;
-}
-function arrayToMap(array, key){
-    var map = new Object();
-    for (var i = 0; i < array.length; i++) {
-        var obj = array[i];
-        map[obj[key]] = obj;
     }
     return map;
 }

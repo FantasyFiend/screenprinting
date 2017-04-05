@@ -2,13 +2,15 @@
 9; /**
    * Create by zwy on 2017/3/24.
    */
+
 var Nav = React.createClass({
 	displayName: "Nav",
 
 	getInitialState: function () {
 		return {
 			user: null,
-			list: []
+			list: [],
+			count: 0
 		};
 	},
 	componentWillMount: function () {
@@ -16,7 +18,7 @@ var Nav = React.createClass({
 			type: "get",
 			url: "service/shop/getSessionUserAndNavType",
 			success: function (data) {
-				this.setState({ user: data.map.user, list: data.list });
+				this.setState({ user: data.map.user, list: data.list, count: data.map.count });
 			}.bind(this)
 		});
 	},
@@ -129,7 +131,13 @@ var Nav = React.createClass({
 								React.createElement(
 									"a",
 									{ href: "cart.html" },
-									React.createElement("span", { className: "glyphicon glyphicon-shopping-cart" })
+									React.createElement("span", { className: "glyphicon glyphicon-shopping-cart" }),
+									"\xA0\xA0",
+									React.createElement(
+										"span",
+										{ className: "badge", id: "cartBadge" },
+										this.state.count
+									)
 								)
 							)
 						),

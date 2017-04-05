@@ -1,5 +1,6 @@
 *{
     letter-spacing: 1px;
+    font-family: "Microsoft YaHei UI";
 }
 .board-container{
     margin-top: 60px;
@@ -34,4 +35,43 @@
 }
 .register-container .input-group, .login-container .input-group{
     margin: 15px 0;
+}
+#nav_container{
+    margin-bottom:80px;
+}
+
+.condition-group{
+    margin: 10px 0;
+    overflow-y: hidden;
+    transition:height .3s linear;
+    -webkit-transition:height .3s linear;
+    -moz-transition:height .3s linear;
+    -o-transition:height .3s linear;
+}
+.condition-title{
+    display: inline-block;
+    width:100%;
+    height: 35px;
+    font-size: 16px;
+    color:#000;
+    text-align: left;
+    padding:5px;
+    border-bottom: 1px solid #4cae4c;
+    cursor: pointer;
+}
+.condition-title p{
+    display: inline-block;
+    float: right;
+}
+.condition-item{
+    display: inline-block;
+    width:100%;
+    font-size: 12px;
+    color:#000;
+    text-align: left;
+    padding:5px 5px 5px 25px;
+}
+.condition-group .active{
+    color: #4cae4c;
+    font-size: 16px;
 }

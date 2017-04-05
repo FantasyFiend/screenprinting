@@ -1,22 +1,18 @@
 package cn.siwangyin.service.impl;
 
-import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import cn.siwangyin.domainObject.SwyCommodity;
-import cn.siwangyin.domainObject.SwyTag;
-import cn.siwangyin.domainObject.SwyUserBasic;
+import cn.siwangyin.domainObject.*;
 import cn.siwangyin.system.SwyQueryResult;
 import org.nutz.dao.Cnd;
 import org.nutz.dao.Condition;
 import org.nutz.dao.Dao;
 
 import cn.siwangyin.config.IocConfig;
-import cn.siwangyin.domainObject.SwyNavType;
 import cn.siwangyin.service.ShopService;
 import org.nutz.json.Json;
 
@@ -86,6 +82,7 @@ public class ShopServiceImpl implements ShopService {
 				SwyCommodity sc = commodityList.get(i);
 				String[] commodityTagNameArray = sc.getTagNames().split("-");
 				if (Arrays.asList(commodityTagNameArray).containsAll(Arrays.asList(array))) {
+				    sc.setDetailHtml("");
 					list.add(sc);
 				}
 			}
@@ -93,4 +90,35 @@ public class ShopServiceImpl implements ShopService {
 		return list;
 	}
 
+	@Override
+	public int getCartCount(int userId) {
+		Condition cnd = Cnd.where("state","=",'Y').and("userId","=",userId);
+        List<SwyCart> list = dao.query(SwyCart.class, cnd);
+        int count = 0;
+        for (int i = 0; i < list.size(); i++) {
+            SwyCart sc = list.get(i);
+            count += sc.getAmount();
+        }
+		return count;
+	}
+
+    @Override
+    public int addToCart(int userId, int commodityId, int amount) {
+        Condition cnd = Cnd.where("userId", "=", userId).and("commodityId", "=", commodityId).and("state","=",'Y');
+        SwyCart sc = dao.fetch(SwyCart.class, cnd);
+        if (sc != null) {
+            sc.setAmount(sc.getAmount() + amount);
+            dao.update(sc);
+        }else{
+            sc = new SwyCart();
+            sc.setDate(new Date());
+            sc.setState('Y');
+            sc.setUserId(userId);
+            sc.setCommodityId(commodityId);
+            sc.setAmount(amount);
+            dao.insert(sc);
+        }
+        int count = getCartCount(userId);
+        return count;
+    }
 }

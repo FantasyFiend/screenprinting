@@ -21,4 +21,8 @@ public interface ShopService {
     List<SwyTag> getAllCondition(String type);
 
     List<SwyCommodity> queryCommodityByCondition(String[] array) throws UnsupportedEncodingException;
+
+    int getCartCount(int userId);
+
+    int addToCart(int userId, int commodityId, int amount);
 }

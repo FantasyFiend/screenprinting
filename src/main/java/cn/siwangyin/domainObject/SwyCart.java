@@ -5,6 +5,7 @@ import java.util.Date;
 import org.nutz.dao.entity.annotation.*;
 
 @Table("swy_cart")
+@PK({"userId", "commodityId"})
 public class SwyCart {
 
 	@Column("user_id")

@@ -81,9 +81,9 @@
                 data:{email:email, password:password},
                 success:function(msg){
                     if (msg === "success") {
-                        var path = getQueryString("from");
+                        var path = getCookie("swyFrom");
                         if (path == null) {
-                            path = "/"
+                            path = "/index.html"
                         }
                         window.location.href = path;
                     } else{
