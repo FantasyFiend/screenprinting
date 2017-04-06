@@ -1,10 +1,7 @@
 package cn.siwangyin.service.impl;
 
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import cn.siwangyin.domainObject.*;
 import cn.siwangyin.system.SwyQueryResult;
@@ -15,6 +12,7 @@ import org.nutz.dao.Dao;
 import cn.siwangyin.config.IocConfig;
 import cn.siwangyin.service.ShopService;
 import org.nutz.json.Json;
+import org.nutz.lang.Lang;
 
 public class ShopServiceImpl implements ShopService {
 	
@@ -131,4 +129,46 @@ public class ShopServiceImpl implements ShopService {
 	public SwyCart getCartByIds(int userId, int commodityId) {
 		return dao.fetchx(SwyCart.class, userId, commodityId);
 	}
+
+	@Override
+	public List<SwyCart> getCartList(int userId) {
+		Condition cnd = Cnd.where("userId","=",userId);
+		List<SwyCart> list = dao.query(SwyCart.class, cnd);
+		if (list == null || list.size() == 0) {
+			return null;
+		}
+		int[] commodityIdArray = new int[list.size()];
+		for (int i = 0; i < list.size(); i++) {
+		    commodityIdArray[i] = list.get(i).getCommodityId();
+        }
+        cnd = Cnd.where("id","in",commodityIdArray);
+		List<SwyCommodity> commodityList = dao.query(SwyCommodity.class, cnd);
+		Map<Integer, SwyCommodity> map = (Map<Integer, SwyCommodity>) Lang.collection2map(HashMap.class, commodityList, "id");
+        for (int i = 0; i < list.size(); i++) {
+            SwyCart sc = list.get(i);
+            SwyCommodity commodity = map.get(sc.getCommodityId());
+            if (commodity != null) {
+                String[] array = commodity.getImgPath().split("\\|");
+                sc.setImgPath(array[0]);
+                sc.setName(commodity.getName());
+                sc.setPrice(commodity.getPrice());
+            }
+        }
+        return list;
+	}
+
+    @Override
+    public int changeCartAmount(int userId, int commodityId, int amount) {
+	    SwyCart sc = dao.fetchx(SwyCart.class, userId, commodityId);
+	    if (sc != null) {
+	        sc.setAmount(amount);
+	        dao.update(sc);
+        }
+        return amount;
+    }
+
+    @Override
+    public void deleteCommodityInCart(int userId, int commodityId) {
+        dao.deletex(SwyCart.class, userId, commodityId);
+    }
 }

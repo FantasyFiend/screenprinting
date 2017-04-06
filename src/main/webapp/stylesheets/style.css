@@ -162,3 +162,40 @@
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
 }
+.cart-table{
+    width:100%;
+}
+.cart-table td{
+    text-align: center;
+    border:0;
+}
+.table-title{
+    background-color: #4cae4c;
+    color: #fff;
+    font-size:14px;
+}
+.table-title td{
+    padding:5px 0;
+}
+.table-title-info{
+    flex:1;
+}
+.table-title-price, .table-title-amount{
+    width:100px;
+}
+.table-item-amount input{
+    width:50px;
+}
+.table-title-operation{
+    width:50px;
+}
+.cart-table .table-item-info{
+    text-align: left;
+}
+.table-item-info img{
+    cursor: pointer;
+    width:150px;
+}
+.table-item-info span{
+    cursor: pointer;
+}

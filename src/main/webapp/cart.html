@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>黑光避难所</title>
+    <meta name="keywords" content="screenprinting,workshop,training">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+    <link rel="stylesheet"  href="./stylesheets/bootstrap.min.css">
+    <!--<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">-->
+    <link rel='stylesheet' href='./stylesheets/style.css' />
+    <script src="./javascripts/jquery.min.js"></script>
+    <script src="./javascripts/bootstrap.min.js"></script>
+    <script src="./javascripts/function.js"></script>
+    <script src="./javascripts/underscore-min.js"></script>
+    <script src="./javascripts/react-with-addons.min.js"></script>
+    <script src="./javascripts/react-dom.min.js"></script>
+</head>
+<style>
+    .glyphicon-trash{
+        cursor: pointer;
+    }
+</style>
+<body>
+<div class="container" id="nav_container"></div>
+<script src="./react/build/nav_build.js"></script>
+<div class="container" id="cart_container"></div>
+<script>
+    var _list = null;
+</script>
+<script src="./react/build/cart_build.js"></script>
+</body>
+<script>
+    $(document).ready(function(){
+        var inputs = $(".table-item-amount").find("input");
+        _.map(inputs, function (el, i) {
+            var commodityId = $(el).attr("data-commodityId");
+            _.map(_list, function (cart, j) {
+                if (cart.commodityId == commodityId) {
+                    $(el).val(cart.amount);
+                }
+            })
+        })
+    });
+</script>
+</html>

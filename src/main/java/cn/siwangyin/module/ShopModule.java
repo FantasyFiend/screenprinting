@@ -129,4 +129,47 @@ public class ShopModule {
 		}
 		return sqr;
 	}
+
+	@At
+    @Ok("json")
+	public SwyQueryResult getCartList(HttpSession session){
+        SwyQueryResult sqr = new SwyQueryResult();
+        SwyUserBasic sub = (SwyUserBasic) session.getAttribute("user");
+        if (sub == null) {
+            sqr.getMap().put("msg","login");
+        }else{
+            List<SwyCart> list = shopService.getCartList(sub.getId());
+            sqr.setList(list);
+            sqr.getMap().put("msg","success");
+        }
+        return sqr;
+    }
+
+    @At
+    @Ok("json")
+    public SwyQueryResult changeCartAmount(HttpSession session, @Param("amount") int amount, @Param("commodityId") int commodityId){
+        SwyQueryResult sqr = new SwyQueryResult();
+        SwyUserBasic sub = (SwyUserBasic) session.getAttribute("user");
+        if (sub == null) {
+            sqr.getMap().put("msg","login");
+        }else{
+            sqr.getMap().put("msg","success");
+            sqr.getMap().put("amount",shopService.changeCartAmount(sub.getId(), commodityId, amount));
+        }
+        return sqr;
+    }
+
+    @At
+    @Ok("json")
+    public SwyQueryResult deleteCommodityInCart(HttpSession session, @Param("commodityId") int commodityId){
+        SwyQueryResult sqr = new SwyQueryResult();
+        SwyUserBasic sub = (SwyUserBasic) session.getAttribute("user");
+        if (sub == null) {
+            sqr.getMap().put("msg","login");
+        }else{
+            shopService.deleteCommodityInCart(sub.getId(), commodityId);
+            sqr.getMap().put("msg","success");
+        }
+        return sqr;
+    }
 }

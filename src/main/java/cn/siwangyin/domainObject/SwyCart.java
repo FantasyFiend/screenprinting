@@ -23,6 +23,12 @@ public class SwyCart {
 	@Column
 	private char state;
 
+	private String imgPath;
+
+	private String name;
+
+	private float price;
+
 	public int getUserId() {
 		return userId;
 	}
@@ -62,5 +68,28 @@ public class SwyCart {
 	public void setState(char state) {
 		this.state = state;
 	}
-	
+
+	public String getImgPath() {
+		return imgPath;
+	}
+
+	public void setImgPath(String imgPath) {
+		this.imgPath = imgPath;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public float getPrice() {
+		return price;
+	}
+
+	public void setPrice(float price) {
+		this.price = price;
+	}
 }

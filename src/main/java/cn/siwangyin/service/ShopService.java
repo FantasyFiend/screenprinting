@@ -30,4 +30,10 @@ public interface ShopService {
     SwyCommodity getCommodityById(int id);
 
     SwyCart getCartByIds(int userId, int commodityId);
+
+    List<SwyCart> getCartList(int userId);
+
+    int changeCartAmount(int userId, int commodityId, int amount);
+
+    void deleteCommodityInCart(int userId, int commodityId);
 }
