@@ -101,7 +101,7 @@ var List = React.createClass({
         $.ajax({
             type:"post",
             url:"service/shop/addToCart",
-            data:{commodity:id, amount:1},
+            data:{commodityId:id, amount:1},
             success:function(data){
                 if (data.map.msg === "success") {
                     $("#cartBadge").text(data.map.count);
@@ -119,9 +119,10 @@ var List = React.createClass({
         var divs = [];
         for (var i = 0; i < this.state.list.length; i++) {
             var commodity = this.state.list[i];
+            var imgPath = commodity.imgPath.split("|")[0];
             divs.push(<div className="col-xs-6 col-sm-6 col-md-4 col-lg-4">
                         <div className="thumbnail">
-                            <a href={"/commodity.html?id=" + commodity.id}><img src={commodity.imgPath} alt={commodity.name}/></a>
+                            <a href={"/commodity.html?id=" + commodity.id}><img src={imgPath} alt={commodity.name}/></a>
                             <div className="caption">
                                 <h6>{commodity.name}</h6>
                                 <p>{"￥" + commodity.price}</p>

@@ -92,6 +92,7 @@
     display: inline-block;
     float: left;
     margin:0 10px;
+    cursor: pointer;
 }
 .little-img .active{
     border: 2px solid #4cae4c;
@@ -100,8 +101,8 @@
     opacity: 0.5;
     border: 2px solid #ddd;
 }
-.info-text-container{
-    padding:20px;
+.info-img-container, .info-text-container{
+    padding:10px 30px;
 }
 .info-title{
     font-size: 30px;
@@ -119,13 +120,45 @@
 }
 .add-to-cart{
     display: inline-block;
-    padding:10px 30px;
+    width: 160px;
+    height: 50px;
     font-size:20px;
-    line-height:40px;
+    line-height:50px;
+    text-align: center;
     background-color: #4cae4c;
     color: #fff;
     cursor: pointer;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
+    margin-bottom: 30px;
+}
+.checkout{
+    display: inline-block;
+    width: 160px;
+    height: 50px;
+    font-size:20px;
+    line-height:50px;
+    text-align: center;
+    background-color: #fff;
+    color: #000;
+    cursor: pointer;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border:2px solid #000;
+}
+.separator-div{
+    width:100%;
+    border-bottom: 2px solid #4cae4c;
+}
+.separator-div span{
+    display: inline-block;
+    padding:5px 10px;
+    font-size: 20px;
+    color: #fff;
+    background-color: #4cae4c;
+    margin:40px 0 0 30px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
 }

@@ -1,2 +1,2 @@
-target/
+target/*
 src/main/webapp/react/node_modules

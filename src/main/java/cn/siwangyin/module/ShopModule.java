@@ -2,6 +2,7 @@ package cn.siwangyin.module;
 
 import javax.servlet.http.HttpSession;
 
+import cn.siwangyin.domainObject.SwyCart;
 import cn.siwangyin.domainObject.SwyCommodity;
 import cn.siwangyin.domainObject.SwyTag;
 import org.nutz.mvc.annotation.At;
@@ -110,4 +111,22 @@ public class ShopModule {
 	    sqr.getMap().put("commodity",shopService.getCommodityById(id));
 	    return sqr;
     }
+
+    @At
+	@Ok("json")
+    public SwyQueryResult checkout(HttpSession session, @Param("commodityId") int id) {
+    	SwyQueryResult sqr = new SwyQueryResult();
+    	SwyUserBasic sub = (SwyUserBasic) session.getAttribute("user");
+    	if (sub == null) {
+			sqr.getMap().put("msg","login");
+		}else{
+			SwyCart sc = shopService.getCartByIds(sub.getId(), id);
+			if (sc == null) {
+				sqr.getMap().put("msg","noCommodities");
+			}else{
+				sqr.getMap().put("msg","success");
+			}
+		}
+		return sqr;
+	}
 }

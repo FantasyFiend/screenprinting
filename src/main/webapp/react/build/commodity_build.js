@@ -16,7 +16,7 @@ var Commodity = React.createClass({
         $.ajax({
             type: "get",
             url: "service/shop/getCommodityById",
-            data: { id, id },
+            data: { id: id },
             success: function (data) {
                 if (data.map.commodity != null) {
                     this.setState({ commodity: data.map.commodity });
@@ -33,13 +33,36 @@ var Commodity = React.createClass({
         $.ajax({
             type: "post",
             url: "service/shop/addToCart",
-            data: { commodity: commodityId, amount: $("#amount").val() },
+            data: { commodityId: commodityId, amount: $("#amount").val() },
             success: function (data) {
                 if (data.map.msg === "success") {
                     $("#cartBadge").text(data.map.count);
                 } else if (data.map.msg === "login") {
                     setCookie("swyFrom", window.location.href);
                     window.location.href = "login.html";
+                }
+            }
+        });
+    },
+    checkout: function () {
+        $.ajax({
+            type: "get",
+            url: "service/shop/checkout",
+            data: { commodityId: this.state.commodity.id },
+            success: function (data) {
+                switch (data.map.msg) {
+                    case "success":
+                        window.location.href = "cart.html";
+                        break;
+                    case "login":
+                        setCookie("swyFrom", window.location.href);
+                        window.location.href = "login.html";
+                        break;
+                    case "noCommodities":
+                        if (confirm("您尚未添加此商品到购物车，是否依旧前往结账页面？")) {
+                            window.location.href = "cart.html";
+                        }
+                        break;
                 }
             }
         });
@@ -65,7 +88,7 @@ var Commodity = React.createClass({
             { className: "commodity_container" },
             React.createElement(
                 "div",
-                { className: "info-container" },
+                { className: "container info-container" },
                 React.createElement(
                     "div",
                     { className: "col-sm-12 col-md-6 info-img-container" },
@@ -118,10 +141,28 @@ var Commodity = React.createClass({
                             { className: "add-to-cart", onClick: this.addToCart, "data-id": commodity.id },
                             "\u52A0\u5165\u8D2D\u7269\u8F66"
                         )
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "info-button-group" },
+                        React.createElement(
+                            "span",
+                            { className: "checkout", onClick: this.checkout },
+                            "\u7ED3\u8D26"
+                        )
                     )
                 )
             ),
-            React.createElement("div", { className: "detail-container", dangerouslySetInnerHTML: { __html: commodity.detailHtml } })
+            React.createElement(
+                "div",
+                { className: "container separator-div" },
+                React.createElement(
+                    "span",
+                    null,
+                    "\u5546\u54C1\u8BE6\u60C5"
+                )
+            ),
+            React.createElement("div", { className: "container detail-container", dangerouslySetInnerHTML: { __html: commodity.detailHtml } })
         );
     }
 });

@@ -56,10 +56,8 @@ var Nav = React.createClass({
 		var login = new Object();
 		if (this.state.user == null) {
 			login.href = "login.html";
-			login.text = 'Login';
 		} else {
 			login.href = "userCenter.html";
-			login.text = this.state.user.nickname;
 		}
 		return React.createElement(
 			"nav",
@@ -122,7 +120,7 @@ var Nav = React.createClass({
 								React.createElement(
 									"a",
 									{ href: login.href },
-									login.text
+									this.state.user == null ? "登录" : this.state.user.nickname
 								)
 							),
 							React.createElement(

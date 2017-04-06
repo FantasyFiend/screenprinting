@@ -126,4 +126,9 @@ public class ShopServiceImpl implements ShopService {
     public SwyCommodity getCommodityById(int id) {
         return dao.fetch(SwyCommodity.class, id);
     }
+
+	@Override
+	public SwyCart getCartByIds(int userId, int commodityId) {
+		return dao.fetchx(SwyCart.class, userId, commodityId);
+	}
 }

@@ -3,6 +3,7 @@ package cn.siwangyin.service;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import cn.siwangyin.domainObject.SwyCart;
 import cn.siwangyin.domainObject.SwyCommodity;
 import cn.siwangyin.domainObject.SwyNavType;
 import cn.siwangyin.domainObject.SwyTag;
@@ -27,4 +28,6 @@ public interface ShopService {
     int addToCart(int userId, int commodityId, int amount);
 
     SwyCommodity getCommodityById(int id);
+
+    SwyCart getCartByIds(int userId, int commodityId);
 }

@@ -37,10 +37,8 @@ var Nav = React.createClass({
 		var login = new Object();
 		if (this.state.user == null) {
 			login.href = "login.html";
-			login.text = 'Login';
 		}else{
 			login.href = "userCenter.html";
-			login.text = this.state.user.nickname;
 		}
 		return 	<nav className="navbar navbar-inverse navbar-fixed-top">
 					<div className="container">
@@ -64,7 +62,7 @@ var Nav = React.createClass({
 				                    </li>
 				                </ul>
 				                <ul className="nav navbar-nav navbar-right">
-				                    <li><a href={login.href}>{login.text}</a></li>
+				                    <li><a href={login.href}>{this.state.user == null ? "登录" : this.state.user.nickname}</a></li>
 				                    <li><a href="cart.html"><span className="glyphicon glyphicon-shopping-cart"></span>&nbsp;&nbsp;<span className="badge" id="cartBadge">{this.state.count}</span></a></li>
 				                </ul>
 				                <form className="navbar-form navbar-right">
