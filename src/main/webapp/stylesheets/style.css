@@ -149,7 +149,6 @@
     border:2px solid #000;
 }
 .separator-div{
-    width:100%;
     border-bottom: 2px solid #4cae4c;
 }
 .separator-div span{
@@ -198,4 +197,68 @@
 }
 .table-item-info span{
     cursor: pointer;
+}
+.total-price {
+    margin-top:20px;
+    font-size:24px;
+    color: #4cae4c;
+    float: right;
+}
+.address-group{
+    margin-top:30px;
+}
+.address-div{
+    padding:10px;
+}
+.address-div div{
+    padding-left:10px;
+    border:2px solid #ddd;
+}
+.address-group .default-address{
+    border-color: #4cae4c;
+}
+.address-item{
+    display: inline-block;
+    width:100%;
+    height:50px;
+    line-height:50px;
+    font-size: 12px;
+}
+.address-item span{
+    display: inline-block;
+    height: 50px;
+    line-height:50px;
+}
+.select-address{
+    text-align: right;
+    padding-right:30px;
+}
+.select-address p{
+    cursor: pointer;
+    color: #000;
+}
+.select-address p:hover{
+    color: #4cae4c;
+}
+.remark{
+    margin-top:20px;
+}
+.submit-order{
+    magin-top:20px;
+}
+.submit-order span{
+    display: inline-block;
+    float: right;
+}
+.tree-table td{
+    padding: 5px;
+    border: 1px solid #eee;
+}
+.tree-table .parent{
+    color: #4cae4c;
+    background-color: #ddd;
+}
+.tree-table .selected{
+    color: #fff;
+    background-color: #4cae4c;
 }

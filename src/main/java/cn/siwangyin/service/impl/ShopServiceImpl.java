@@ -5,9 +5,7 @@ import java.util.*;
 
 import cn.siwangyin.domainObject.*;
 import cn.siwangyin.system.SwyQueryResult;
-import org.nutz.dao.Cnd;
-import org.nutz.dao.Condition;
-import org.nutz.dao.Dao;
+import org.nutz.dao.*;
 
 import cn.siwangyin.config.IocConfig;
 import cn.siwangyin.service.ShopService;
@@ -171,4 +169,32 @@ public class ShopServiceImpl implements ShopService {
     public void deleteCommodityInCart(int userId, int commodityId) {
         dao.deletex(SwyCart.class, userId, commodityId);
     }
+
+	@Override
+	public List<SwyAddress> getAddressList(int userId) {
+		return dao.query(SwyAddress.class, Cnd.where("userId", "=", userId));
+	}
+
+	@Override
+	public SwyAddress saveNewAddress(SwyAddress sa) {
+		int userId = sa.getUserId();
+		Chain chain = Chain.make("defaultAddress",false);
+		dao.update(SwyAddress.class, chain, Cnd.where("userId","=",userId));
+		return dao.insert(sa);
+	}
+
+    @Override
+    public void updateAddress(SwyAddress sa) {
+        Chain chain = Chain.make("defaultAddress",false);
+        dao.update(SwyAddress.class, chain, Cnd.where("userId","=",sa.getUserId()));
+        dao.update(sa);
+    }
+
+    @Override
+    public SwyOrder submitOrder(SwyOrder swyOrder) {
+	    SwyOrder so = dao.insert(swyOrder);
+	    dao.clear(SwyCart.class, Cnd.where("userId", "=", swyOrder.getUserId()));
+        return so;
+    }
+
 }

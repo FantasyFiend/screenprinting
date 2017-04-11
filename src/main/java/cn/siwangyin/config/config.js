@@ -19,6 +19,9 @@ var ioc = {
         args : [{refer:"dataSource"}]
     },
     shopService : {
-    	type : "cn.siwangyin.service.impl.ShopServiceImpl"
+        type : "cn.siwangyin.service.impl.ShopServiceImpl"
+    },
+    manageService : {
+        type : "cn.siwangyin.service.impl.ManageServiceImpl"
     }
 }

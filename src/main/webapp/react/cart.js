@@ -82,10 +82,12 @@ var Cart = React.createClass({
         }
         var table = [];
         table.push(<tr className="table-title"><td className="table-title-info">商品信息</td><td className="table-title-price">价格</td><td className="table-title-amount">数量</td><td className="table-title-operation"></td></tr>);
+        var totalFee = 0;
         _.map(this.state.list,function(cart, i){
+            totalFee += cart.price * cart.amount;
             table.push(<tr><td className="table-item-info" data-commodityId={cart.commodityId} onClick={this.toCommodityPage}><img src={cart.imgPath} data-commodityId={cart.commodityId}/><span data-commodityId={cart.commodityId}>{cart.name}</span></td><td className="table-item-price">{cart.price}</td><td className="table-item-amount"><input type="number" min="1" step="1" data-commodityId={cart.commodityId} onChange={this.amountChange} /></td><td className="table-item-operation"><span className="glyphicon glyphicon-trash" data-commodityId={cart.commodityId} onClick={this.deleteCommodityInCart}></span></td></tr>);
         }.bind(this));
-        return <div className="cart-div"><table className="cart-table">{table}</table></div>;
+        return <div className="cart-div"><table className="cart-table">{table}</table><div className="total-price">总价：{totalFee}元</div></div>;
     }
 });
 ReactDOM.render(<Cart />, document.getElementById("cart_container"));

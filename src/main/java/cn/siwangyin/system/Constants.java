@@ -21,7 +21,7 @@ public class Constants {
 	public static final String FAHUOTEMPLATEID = "95046";
 	public static final String ACTIVATIONCODETEMPLATEID = "101865";
 
-	public static final String[] ADMINACCOUNT = {"13001002765","18611067611","13998230802","13301057527","15201478725"};
+	public static final String[] ADMINACCOUNT = {"522381613@qq.com"};
 
 	public static final String TOKEN = "PogoWechat";
 	public static final String APPID = "wxdbd35c288644f940";

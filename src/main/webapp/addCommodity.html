@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>添加商品</title>
+    <meta name="keywords" content="screenprinting,workshop,training">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+    <link rel="stylesheet"  href="./stylesheets/bootstrap.min.css">
+    <!--<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">-->
+    <link rel='stylesheet' href='./stylesheets/style.css' />
+    <script src="./javascripts/jquery.min.js"></script>
+    <script src="./javascripts/bootstrap.min.js"></script>
+    <script src="./javascripts/function.js"></script>
+    <script src="./javascripts/underscore-min.js"></script>
+    <script src="./javascripts/react-with-addons.min.js"></script>
+    <script src="./javascripts/react-dom.min.js"></script>
+</head>
+<style>
+    .input-group{
+        width: 100%;
+    }
+</style>
+<body>
+<div class="container">
+    <div style="font-size: 20px;line-height: 40px;">标签配置</div>
+    <div style="margin-bottom: 30px;" id="tag_config_container"></div>
+    <div style="font-size: 20px;line-height: 40px;">导航配置</div>
+    <div style="margin-bottom: 30px;" id="nav_config_container"></div>
+    <div class="input-group"><label for="commodityNumber">商品编号：</label><input class="form-control" id="commodityNumber" name="orderNumber"/></div>
+    <div class="input-group"><label for="name">商品名称：</label><input class="form-control" id="name" name="name"/></div>
+    <div class="input-group"><label for="price">商品价格：</label><input class="form-control" id="price" name="price"/></div>
+    <div class="input-group"><label for="description">商品描述：</label><input class="form-control" id="description" name="description"/></div>
+    <div class="input-group"><label for="imgPath">商品描述：</label><input class="form-control" id="imgPath" name="imgPath"/></div>
+</div>
+<script>
+    var _selectedNav;
+    function listDataToTreeData(list, key, parentKey, rootRule){
+        var root = new Object();
+        for (var i = 0; i < list.length; i++) {
+            var obj = list[i];
+            if (obj[parentKey] == rootRule) {
+                obj.children = new Array();
+                addChildren(obj, list, key, parentKey);
+                root[obj[key]] = obj;
+            }
+        }
+        return root;
+    }
+    function addChildren(obj, list, key, parentKey) {
+        for (var i = 0; i < list.length; i++) {
+            var child = list[i];
+            if (obj[key] == child[parentKey]) {
+                addChildren(child, list, key, parentKey);
+                obj.children.push(child);
+            }
+        }
+    }
+</script>
+<script src="./react/build/navList_build.js"></script>
+<script src="./react/build/tagList_build.js"></script>
+</body>
+</html>

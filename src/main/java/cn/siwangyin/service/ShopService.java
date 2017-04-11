@@ -3,10 +3,7 @@ package cn.siwangyin.service;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
-import cn.siwangyin.domainObject.SwyCart;
-import cn.siwangyin.domainObject.SwyCommodity;
-import cn.siwangyin.domainObject.SwyNavType;
-import cn.siwangyin.domainObject.SwyTag;
+import cn.siwangyin.domainObject.*;
 import cn.siwangyin.system.SwyQueryResult;
 import org.nutz.mvc.annotation.At;
 import org.nutz.mvc.annotation.Ok;
@@ -36,4 +33,12 @@ public interface ShopService {
     int changeCartAmount(int userId, int commodityId, int amount);
 
     void deleteCommodityInCart(int userId, int commodityId);
+
+    List<SwyAddress> getAddressList(int userId);
+
+    SwyAddress saveNewAddress(SwyAddress sa);
+
+    void updateAddress(SwyAddress sa);
+
+    SwyOrder submitOrder(SwyOrder swyOrder);
 }

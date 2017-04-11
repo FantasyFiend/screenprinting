@@ -113,7 +113,9 @@ var Cart = React.createClass({
             ),
             React.createElement("td", { className: "table-title-operation" })
         ));
+        var totalFee = 0;
         _.map(this.state.list, function (cart, i) {
+            totalFee += cart.price * cart.amount;
             table.push(React.createElement(
                 "tr",
                 null,
@@ -151,6 +153,13 @@ var Cart = React.createClass({
                 "table",
                 { className: "cart-table" },
                 table
+            ),
+            React.createElement(
+                "div",
+                { className: "total-price" },
+                "\u603B\u4EF7\uFF1A",
+                totalFee,
+                "\u5143"
             )
         );
     }

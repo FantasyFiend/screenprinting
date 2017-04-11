@@ -2,22 +2,17 @@ package cn.siwangyin.module;
 
 import javax.servlet.http.HttpSession;
 
-import cn.siwangyin.domainObject.SwyCart;
-import cn.siwangyin.domainObject.SwyCommodity;
-import cn.siwangyin.domainObject.SwyTag;
-import org.nutz.mvc.annotation.At;
-import org.nutz.mvc.annotation.Fail;
-import org.nutz.mvc.annotation.Ok;
-
+import cn.siwangyin.domainObject.*;
 import cn.siwangyin.config.IocConfig;
 import cn.siwangyin.service.ShopService;
+import cn.siwangyin.system.*;
 
-import cn.siwangyin.domainObject.SwyUserBasic;
-import cn.siwangyin.system.SwyQueryResult;
-import org.nutz.mvc.annotation.Param;
+import org.nutz.json.Json;
+import org.nutz.mvc.annotation.*;
+
 
 import java.io.UnsupportedEncodingException;
-import java.util.List;
+import java.util.*;
 
 @At("/shop")
 @Fail("http:500")
@@ -172,4 +167,96 @@ public class ShopModule {
         }
         return sqr;
     }
+
+    @At
+	@Ok("json")
+    public  SwyQueryResult getAddressList(HttpSession session){
+		SwyQueryResult sqr = new SwyQueryResult();
+		SwyUserBasic sub = (SwyUserBasic) session.getAttribute("user");
+		if (sub == null) {
+			sqr.getMap().put("msg","login");
+		}else{
+			List<SwyAddress> list = shopService.getAddressList(sub.getId());
+			sqr.getMap().put("msg","success");
+			sqr.setList(list);
+		}
+		return sqr;
+	}
+
+	@At
+	@Ok("json")
+	public SwyQueryResult selectAddress(HttpSession session, @Param("id") int id, @Param("provinceCityDistrict") String provinceCityDistrict, @Param("addressDetail") String addressDetail, @Param("contactNumber") String contactNumber, @Param("contactMan") String contactMan) {
+        SwyQueryResult sqr = new SwyQueryResult();
+        SwyUserBasic sub = (SwyUserBasic) session.getAttribute("user");
+        if (sub == null) {
+            sqr.getMap().put("msg","login");
+        }else {
+            SwyAddress sa = new SwyAddress();
+            sa.setUserId(sub.getId());
+            sa.setProvinceCityDistrict(provinceCityDistrict);
+            sa.setAddressDetail(addressDetail);
+            sa.setContactNumber(contactNumber);
+            sa.setContactMan(contactMan);
+            sa.setDefaultAddress(true);
+            sa.setState('Y');
+            if (id == 0){
+                sa = shopService.saveNewAddress(sa);
+            }else{
+                sa.setId(id);
+                shopService.updateAddress(sa);
+            }
+            if (sa.getId() > 0) {
+                sqr.getMap().put("msg", "success");
+                sqr.getMap().put("address",sa);
+            }
+        }
+        return sqr;
+	}
+
+	@At
+    @Ok("json")
+	public SwyQueryResult submitOrder(HttpSession session, @Param("addressText") String addressText, @Param("totalPrice") float totalPrice, @Param("remark") String remark, @Param("orderList") String orderList) {
+        SwyQueryResult sqr = new SwyQueryResult();
+        SwyUserBasic sub = (SwyUserBasic) session.getAttribute("user");
+        if (sub == null) {
+            sqr.getMap().put("msg","login");
+        }else{
+            SwyOrder swyOrder = new SwyOrder();
+            Date date = new Date();
+            String orderNumber = SwyUtil.getOrderTime(date) + String.valueOf(sub.getId()) + SwyUtil.generateEmailCheckcode();
+            List<SwyCart> list = Json.fromJsonAsList(SwyCart.class, orderList);
+            if (list == null || list.size() > 10) {
+                sqr.getMap().put("msg","请选择10种以内的商品！");
+                return sqr;
+            }
+            for (int i = 0; i < list.size(); i++) {
+                SwyCart sc = list.get(i);
+                if (swyOrder.getOrderTitle() != null && swyOrder.getOrderTitle().length() > 50) {
+                    swyOrder.setOrderTitle(swyOrder.getOrderTitle() + "......");
+                    break;
+                }
+                if (i == 0) {
+                    swyOrder.setOrderTitle(sc.getName() + " x " + sc.getAmount());
+                }else{
+                    swyOrder.setOrderTitle(sc.getName() + " x " + sc.getAmount());
+                }
+            }
+            swyOrder.setOrderItem(orderList);
+            swyOrder.setAddressText(addressText);
+            swyOrder.setCreateTime(date);
+            swyOrder.setOrderNumber(orderNumber);
+            swyOrder.setRemark(remark);
+            swyOrder.setState('P');
+            swyOrder.setTotalPrice(totalPrice);
+            swyOrder.setUserId(sub.getId());
+            swyOrder.setShowOrHide('S');
+            swyOrder = shopService.submitOrder(swyOrder);
+            if (swyOrder.getId() > 0) {
+                sqr.getMap().put("msg","success");
+                sqr.getMap().put("order",swyOrder);
+            }
+        }
+        return sqr;
+    }
+
 }
