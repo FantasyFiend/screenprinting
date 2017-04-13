@@ -71,10 +71,7 @@
                         setCookie("swyFrom",window.location.href);
                         window.location.href = "login.html";
                     }else if (data.map.msg === "success"){
-                        var order = data.map.order;
-                        console.log(order);
-                        return false;
-                        window.location.href = "alipayapi.jsp?out_trade_no=" + order.orderNumber + "&subject=" + utf16to8(order.orderTitle) + "&total_fee=" + order.totalPrice;
+                        window.location.href = "order.html";
                     }else{
                         alert(data.map.msg);
                     }

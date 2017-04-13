@@ -262,3 +262,71 @@
     color: #fff;
     background-color: #4cae4c;
 }
+.switch-order-type{
+    width:100%;
+    font-size: 12px;
+    margin-bottom:30px;
+}
+.switch-order-type span{
+    cursor: pointer;
+    display: inline-block;
+    margin: 0 10px;
+    color: #000;
+}
+.switch-order-type span:hover{
+    color: #4cae4c;
+    text-decoration: underline;
+}
+.switch-order-type .active{
+    color: #4cae4c;
+}
+.order-list-div{
+    width: 100%;
+}
+.order-div{
+    width:100%;
+    margin-top: 20px;
+    background-color: #f5f5f5;
+    border:1px solid #eee;
+}
+.order-info-table{
+    width:100%;
+}
+.order-info-table td{
+    font-size: 12px;
+    line-height: 30px;
+}
+.info-table-title{
+    width: 100px;
+    text-align: right;
+}
+.order-item-table{
+    width:100%;
+    background-color: #fff;
+}
+.order-item-table td{
+    text-align: center;
+}
+.order-item-table img{
+    width:150px;
+}
+.pay-order p{
+    display: inline-block;
+    cursor: pointer;
+    color: #4cae4c;
+    margin:0 5px;
+}
+.pay-order p:hover{
+    text-decoration: underline;
+    color: #5cb85c;
+}
+.delete-button{
+    text-align: center;
+    font-size:14px;
+    background-color: #e7e1e9;
+    color: #000;
+    cursor: pointer;
+}
+.delete-button:hover{
+    background-color: #cbc8c8;
+}

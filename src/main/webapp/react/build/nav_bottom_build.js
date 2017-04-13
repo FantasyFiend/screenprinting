@@ -6,7 +6,7 @@
 ReactDOM.render(React.createElement(
   "div",
   null,
-  "1234"
+  "\xA0"
 ), document.getElementById("bottom_container"));
 
 },{}]},{},[1]);

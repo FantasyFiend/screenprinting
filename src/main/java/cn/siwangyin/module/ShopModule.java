@@ -7,6 +7,7 @@ import cn.siwangyin.config.IocConfig;
 import cn.siwangyin.service.ShopService;
 import cn.siwangyin.system.*;
 
+import org.nutz.http.Http;
 import org.nutz.json.Json;
 import org.nutz.mvc.annotation.*;
 
@@ -259,4 +260,32 @@ public class ShopModule {
         return sqr;
     }
 
+    @At
+    @Ok("json")
+    public SwyQueryResult getOrderList(HttpSession session, @Param("type") char type) {
+        SwyQueryResult sqr = new SwyQueryResult();
+        SwyUserBasic sub = (SwyUserBasic) session.getAttribute("user");
+        if (sub == null) {
+            sqr.getMap().put("msg","login");
+        }else {
+            sqr.getMap().put("msg","success");
+            sqr.setList(shopService.getOrderList(sub.getId(), type));
+        }
+        return sqr;
+    }
+
+    @At
+    @Ok("json")
+    public SwyQueryResult deleteOrder(HttpSession session, @Param("id") int id, @Param("type") char type) {
+        SwyQueryResult sqr = new SwyQueryResult();
+        SwyUserBasic sub = (SwyUserBasic) session.getAttribute("user");
+        if (sub == null) {
+            sqr.getMap().put("msg","login");
+        }else {
+            sqr.getMap().put("msg","success");
+            shopService.deleteOrder(id);
+            sqr.setList(shopService.getOrderList(sub.getId(), type));
+        }
+        return sqr;
+    }
 }

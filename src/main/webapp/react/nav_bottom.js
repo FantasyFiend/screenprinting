@@ -2,4 +2,4 @@
  * 
  */
 
-ReactDOM.render(<div>12</div>,document.getElementById("bottom_container"));
+ReactDOM.render(<div>&nbsp;</div>,document.getElementById("bottom_container"));

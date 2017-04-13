@@ -197,4 +197,22 @@ public class ShopServiceImpl implements ShopService {
         return so;
     }
 
+	@Override
+	public List<SwyOrder> getOrderList(int userId, char type) {
+		Condition cnd;
+		if (type == 'A') {
+			cnd = Cnd.where("showOrHide","=",'S').and("userId","=",userId);
+		}else{
+			cnd = Cnd.where("showOrHide","=",'S').and("userId","=",userId).and("state","=",type);
+		}
+		return dao.query(SwyOrder.class, cnd);
+	}
+
+    @Override
+    public void deleteOrder(int id) {
+        Condition cnd = Cnd.where("id", "=", id);
+        Chain chain = Chain.make("showOrHide", 'H');
+        dao.update(SwyOrder.class, chain, cnd);
+    }
+
 }

@@ -41,4 +41,8 @@ public interface ShopService {
     void updateAddress(SwyAddress sa);
 
     SwyOrder submitOrder(SwyOrder swyOrder);
+
+    List<SwyOrder> getOrderList(int userId, char type);
+
+    void deleteOrder(int id);
 }
