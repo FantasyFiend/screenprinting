@@ -4,6 +4,7 @@ import cn.siwangyin.config.IocConfig;
 import cn.siwangyin.domainObject.*;
 import cn.siwangyin.service.ManageService;
 import cn.siwangyin.system.*;
+import org.nutz.http.Http;
 import org.nutz.mvc.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -91,6 +92,34 @@ public class ManageModule {
             st.setParentId(parentId);
             st.setState(state);
             manageService.updateTag(st);
+            sqr.setList(manageService.getTagList());
+            sqr.getMap().put("msg","success");
+        }else{
+            sqr.getMap().put("msg","login");
+        }
+        return sqr;
+    }
+
+    @At
+    @Ok("json")
+    public SwyQueryResult addNewNav(HttpSession session) {
+        SwyQueryResult sqr = new SwyQueryResult();
+        if (checkLogin(session)) {
+            manageService.addNewNav();
+            sqr.setList(manageService.getNavTypeList());
+            sqr.getMap().put("msg","success");
+        }else{
+            sqr.getMap().put("msg","login");
+        }
+        return sqr;
+    }
+
+    @At
+    @Ok("json")
+    public SwyQueryResult addNewTag(HttpSession session) {
+        SwyQueryResult sqr = new SwyQueryResult();
+        if (checkLogin(session)) {
+            manageService.addNewTag();
             sqr.setList(manageService.getTagList());
             sqr.getMap().put("msg","success");
         }else{

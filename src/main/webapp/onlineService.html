@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>在线客服</title>
+</head>
+<body>
+&perp;
+<button onclick="sendMsg()">发送</button>
+<script>
+    var _socketServer = 'ws://localhost:8080/screenprinting/websocket';
+    var websocket = new WebSocket('ws://localhost:8080/websocket');
+    // 处理服务器端发送的数据
+    websocket.onopen = function (evt) {
+        //已经建立连接
+        alert("已经建立连接");
+    };
+    websocket.onclose = function (evt) {
+        //已经关闭连接
+        alert("已经关闭连接");
+    };
+    websocket.onmessage = function (evt) {
+        //收到服务器消息，使用evt.data提取
+        evt.stopPropagation()
+        evt.preventDefault()
+        writeToScreen(evt.data);
+        //websocket.close();
+    };
+    websocket.onerror = function (evt) {
+        //产生异常
+        writeToScreen(evt.message);
+    };
+    function sendMsg() {
+        if (websocket.readyState == websocket.OPEN) {
+            msg = "test";
+            websocket.send(msg);
+            writeToScreen("发送成功!");
+        } else {
+            writeToScreen("链接还没有打开!");
+        }
+    }
+    function writeToScreen(message) {
+        var pre = document.createElement("p");
+        pre.style.wordWrap = "break-word";
+        pre.innerHTML += message;
+        document.body.appendChild(pre);
+    }
+    sendMsg();
+
+    // 把消息添加到聊天内容中
+    function addMessage(message) {
+        message = JSON.parse(message);
+        var messageItem = '<li class="am-comment '
+            + (message.isSelf ? 'am-comment-flip' : 'am-comment')
+            + '">'
+            + '<a href="javascript:void(0)" ><img src="assets/images/'
+            + (message.isSelf ? 'self.png' : 'others.jpg')
+            + '" alt="" class="am-comment-avatar" width="48" height="48"/></a>'
+            + '<div class="am-comment-main"><header class="am-comment-hd"><div class="am-comment-meta">'
+            + '<a href="javascript:void(0)" class="am-comment-author">'
+            + message.nickname + '</a> <time>' + message.date
+            + '</time></div></header>'
+            + '<div class="am-comment-bd">' + message.content
+            + '</div></div></li>';
+        $(messageItem).appendTo('#message-list');
+        // 把滚动条滚动到底部
+        $(".chat-content-container").scrollTop($(".chat-content-container")[0].scrollHeight);
+    }
+</script>
+</body>
+</html>

@@ -38,4 +38,20 @@ public class ManageServiceImpl implements ManageService{
     public void updateTag(SwyTag st) {
         dao.update(st);
     }
+
+    @Override
+    public void addNewNav() {
+        SwyNavType snt = new SwyNavType();
+        snt.setState('Y');
+        snt.setParentId(0);
+        dao.insert(snt);
+    }
+
+    @Override
+    public void addNewTag() {
+        SwyTag st = new SwyTag();
+        st.setState('Y');
+        st.setParentId(0);
+        dao.insert(st);
+    }
 }

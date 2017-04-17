@@ -262,6 +262,21 @@
     color: #fff;
     background-color: #4cae4c;
 }
+.tree-table div{
+    margin-bottom: 20px;
+}
+.tree-table div span{
+    display: inline-block;
+    padding:5px 10px;
+    font-size:14px;
+    color: #fff;
+    cursor: pointer;
+    background-color: #4cae4c;
+    border-radius: 3px;
+}
+.tree-table div span:hover{
+    background-color: #24ae28;
+}
 .switch-order-type{
     width:100%;
     font-size: 12px;

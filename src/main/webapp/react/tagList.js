@@ -77,6 +77,20 @@ var TagList = React.createClass({
         _selectedTag = newArray;
         this.setState({selectedArray:newArray});
     },
+    addNewOne:function(){
+        $.ajax({
+            type:"post",
+            url:"service/manage/addNewTag",
+            success:function (data) {
+                if (data.map.msg === "login"){
+                    setCookie("swyFrom",window.location.href);
+                    window.location.href = "login.html";
+                }else if (data.map.msg === "success"){
+                    this.setState({list:data.list})
+                }
+            }.bind(this)
+        })
+    },
     render:function(){
         var list = this.state.list;
         var selectedArray = this.state.selectedArray;
@@ -131,7 +145,7 @@ var TagList = React.createClass({
                 trs.push(<tr className={child.selected ? "selected":""}>{tds}</tr>);
             }
         }
-        return <div className="tree-table"><table>{trs}</table></div>;
+        return <div className="tree-table"><div><span onClick={this.addNewOne}>添加</span></div><table>{trs}</table></div>;
     }
 });
 ReactDOM.render(<TagList />, document.getElementById("tag_config_container"));

@@ -15,4 +15,8 @@ public interface ManageService {
     List<SwyTag> getTagList();
 
     void updateTag(SwyTag st);
+
+    void addNewNav();
+
+    void addNewTag();
 }
