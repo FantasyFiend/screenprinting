@@ -6,8 +6,11 @@ import cn.siwangyin.service.ManageService;
 import cn.siwangyin.system.*;
 import org.nutz.http.Http;
 import org.nutz.mvc.annotation.*;
+import org.nutz.mvc.upload.TempFile;
+import org.nutz.mvc.upload.UploadAdaptor;
 
 import javax.servlet.http.HttpSession;
+import java.io.File;
 
 /**
  * Created by zwy on 2017/4/11.
@@ -122,6 +125,19 @@ public class ManageModule {
             manageService.addNewTag();
             sqr.setList(manageService.getTagList());
             sqr.getMap().put("msg","success");
+        }else{
+            sqr.getMap().put("msg","login");
+        }
+        return sqr;
+    }
+
+    @At
+    @Ok("json")
+    @AdaptBy(type = UploadAdaptor.class, args = { "${app.root}/WEB-INF/tmp" })
+    public SwyQueryResult uploadImage(HttpSession session, @Param("file-zh[]") File file){
+        SwyQueryResult sqr = new SwyQueryResult();
+        if (checkLogin(session)) {
+
         }else{
             sqr.getMap().put("msg","login");
         }

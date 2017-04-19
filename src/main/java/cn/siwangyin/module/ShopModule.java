@@ -7,7 +7,6 @@ import cn.siwangyin.config.IocConfig;
 import cn.siwangyin.service.ShopService;
 import cn.siwangyin.system.*;
 
-import org.nutz.http.Http;
 import org.nutz.json.Json;
 import org.nutz.mvc.annotation.*;
 

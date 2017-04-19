@@ -10,7 +10,7 @@ var ioc = {
             username : "root",
             password : "root",
             testWhileIdle : true,
-            validationQuery : "select 1" ,
+            validationQuery : "select 1 from dual" ,
             maxActive : 1000
         }
     },
