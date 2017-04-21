@@ -1,5 +1,10 @@
 package cn.siwangyin.system;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
@@ -12,6 +17,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.nutz.lang.random.R;
+
+import javax.imageio.IIOImage;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
+import javax.imageio.event.IIOWriteProgressListener;
+import javax.imageio.stream.FileImageOutputStream;
 
 public class SwyUtil {
 
@@ -160,5 +172,29 @@ public class SwyUtil {
                 + "]]></return_code><return_msg><![CDATA[" + return_msg
                 + "]]></return_msg></xml>";
     }
+
+    /**
+     *
+     * @param newFile
+     * @param sourceImageFile
+     * @param quality
+     * @throws IOException
+     */
+	public static void writeJPEG(File newFile, File sourceImageFile, int quality) throws IOException {
+        BufferedImage image = ImageIO.read(new FileInputStream(sourceImageFile));
+        Iterator it = ImageIO.getImageWritersBySuffix("jpg");
+		if (it.hasNext()) {
+			FileImageOutputStream fileImageOutputStream = new FileImageOutputStream(newFile);
+			ImageWriter iw = (ImageWriter) it.next();
+			ImageWriteParam iwp = iw.getDefaultWriteParam();
+			iwp.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+			iwp.setCompressionQuality((float) quality / 100f);
+			iw.setOutput(fileImageOutputStream);
+			iw.write(null, new IIOImage(image, null, null), iwp);
+			iw.dispose();
+			fileImageOutputStream.flush();
+			fileImageOutputStream.close();
+		}
+	}
 
 }

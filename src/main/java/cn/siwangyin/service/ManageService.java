@@ -19,4 +19,6 @@ public interface ManageService {
     void addNewNav();
 
     void addNewTag();
+
+    SwyCommodity addCommodity(SwyCommodity sc);
 }

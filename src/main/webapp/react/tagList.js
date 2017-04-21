@@ -74,7 +74,14 @@ var TagList = React.createClass({
             });
             newArray.push(key);
         }
-        _selectedTag = newArray;
+        var list = this.state.list;
+        _selectedTag = new Array();
+        for (var i = 0; i < list.length; i++) {
+            var obj = list[i];
+            if (_.indexOf(newArray, obj.id.toString()) > -1) {
+                _selectedTag.push(obj.name);
+            }
+        }
         this.setState({selectedArray:newArray});
     },
     addNewOne:function(){
@@ -145,7 +152,7 @@ var TagList = React.createClass({
                 trs.push(<tr className={child.selected ? "selected":""}>{tds}</tr>);
             }
         }
-        return <div className="tree-table"><div><span onClick={this.addNewOne}>添加</span></div><table>{trs}</table></div>;
+        return <div className="tree-table"><table>{trs}</table><div><span onClick={this.addNewOne}>添加</span></div></div>;
     }
 });
 ReactDOM.render(<TagList />, document.getElementById("tag_config_container"));

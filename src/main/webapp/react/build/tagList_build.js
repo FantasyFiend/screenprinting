@@ -72,7 +72,14 @@ var TagList = React.createClass({
             });
             newArray.push(key);
         }
-        _selectedTag = newArray;
+        var list = this.state.list;
+        _selectedTag = new Array();
+        for (var i = 0; i < list.length; i++) {
+            var obj = list[i];
+            if (_.indexOf(newArray, obj.id.toString()) > -1) {
+                _selectedTag.push(obj.name);
+            }
+        }
         this.setState({ selectedArray: newArray });
     },
     addNewOne: function () {
@@ -197,6 +204,11 @@ var TagList = React.createClass({
             "div",
             { className: "tree-table" },
             React.createElement(
+                "table",
+                null,
+                trs
+            ),
+            React.createElement(
                 "div",
                 null,
                 React.createElement(
@@ -204,11 +216,6 @@ var TagList = React.createClass({
                     { onClick: this.addNewOne },
                     "\u6DFB\u52A0"
                 )
-            ),
-            React.createElement(
-                "table",
-                null,
-                trs
             )
         );
     }

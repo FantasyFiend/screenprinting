@@ -8,8 +8,8 @@ public class SwyCommodity {
 	@Id
 	private int id;
 	
-	@Column("order_number")
-	private String orderNumber;
+	@Column("commodity_number")
+	private String commodityNumber;
 	
 	@Column
 	private String name;
@@ -29,11 +29,11 @@ public class SwyCommodity {
 	@Column("detail_html")
 	private String detailHtml;
 	
-	@Column("cart_sale")
-	private int cartSale;
-	
 	@Column("order_sale")
 	private int orderSale;
+
+	@Column
+	private int stock;
 	
 	@Column
 	private char state;
@@ -46,12 +46,12 @@ public class SwyCommodity {
 		this.id = id;
 	}
 
-	public String getOrderNumber() {
-		return orderNumber;
+	public String getCommodityNumber() {
+		return commodityNumber;
 	}
 
-	public void setOrderNumber(String orderNumber) {
-		this.orderNumber = orderNumber;
+	public void setCommodityNumber(String commodityNumber) {
+		this.commodityNumber = commodityNumber;
 	}
 
 	public String getName() {
@@ -96,12 +96,12 @@ public class SwyCommodity {
 
 	public void setDetailHtml(String detailHtml) { this.detailHtml = detailHtml; }
 
-	public int getCartSale() {
-		return cartSale;
+	public int getStock() {
+		return stock;
 	}
 
-	public void setCartSale(int cartSale) {
-		this.cartSale = cartSale;
+	public void setStock(int stock) {
+		this.stock = stock;
 	}
 
 	public int getOrderSale() {

@@ -1,6 +1,7 @@
 package cn.siwangyin.service.impl;
 
 import cn.siwangyin.config.IocConfig;
+import cn.siwangyin.domainObject.SwyCommodity;
 import cn.siwangyin.domainObject.SwyNavType;
 import cn.siwangyin.domainObject.SwyTag;
 import cn.siwangyin.service.ManageService;
@@ -53,5 +54,10 @@ public class ManageServiceImpl implements ManageService{
         st.setState('Y');
         st.setParentId(0);
         dao.insert(st);
+    }
+
+    @Override
+    public SwyCommodity addCommodity(SwyCommodity sc) {
+        return dao.insert(sc);
     }
 }

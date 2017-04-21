@@ -34,8 +34,8 @@ public class Constants {
 	public static final String SUCCESS_URL = "http://www.letspogo.com/letspogo/shop";
 
 	public static String JSAPI_TICKET = "";
-	public static long JSAPI_TICKET_TIME = 0;
 	public static String ACCESSTOKEN = "";
+	public static long JSAPI_TICKET_TIME = 0;
 	public static final int VALIDTIME = 6000000;
 	public static long ACCESSTOKENBEGIN = 0;
 }

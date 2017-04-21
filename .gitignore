@@ -1,3 +1,4 @@
 target/*
 src/main/webapp/react/node_modules
 src/main/java/com/*
+.idea/*

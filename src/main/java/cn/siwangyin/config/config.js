@@ -6,7 +6,7 @@ var ioc = {
             depose : 'close'
         },
         fields : {
-            url : "jdbc:mysql://127.0.0.1:3306/screenprinting?serverTimezone=UTC",
+            url : "jdbc:mysql://127.0.0.1:3306/screenprinting?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8",
             username : "root",
             password : "root",
             testWhileIdle : true,

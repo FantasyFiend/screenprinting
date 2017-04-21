@@ -148,7 +148,14 @@ var Shop = React.createClass({
     },
     componentWillMount:function(){
         var condition = getQueryString("keywords");
-        var array = condition.split("-");
+        var array;
+        if (condition == null || condition == "") {
+            array = [];
+            condition = getQueryString("type");
+        }else{
+            array = condition.split("-");
+            condition =condition + "-" + getQueryString("type");
+        }
         $.ajax({
            type:"post",
            url:"service/shop/queryCommodityByCondition",
