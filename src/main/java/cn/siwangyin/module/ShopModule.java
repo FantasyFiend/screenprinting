@@ -36,6 +36,20 @@ public class ShopModule {
 	}
 
 	@At
+    @Ok("json")
+	public SwyQueryResult checkLogin(HttpSession session) {
+        SwyQueryResult swyQueryResult = new SwyQueryResult();
+        SwyUserBasic sub = (SwyUserBasic) session.getAttribute("user");
+        if (sub == null) {
+            swyQueryResult.getMap().put("msg","login");
+        }else{
+            swyQueryResult.getMap().put("msg","success");
+            swyQueryResult.getMap().put("user",sub);
+        }
+        return swyQueryResult;
+    }
+
+	@At
 	@Ok("json")
 	public String register(HttpSession session, @Param("email") String email, @Param("nickname") String nickname, @Param("password") String password) {
 		SwyQueryResult sqr = shopService.register(email, nickname, password);

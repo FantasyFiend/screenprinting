@@ -38,4 +38,8 @@ public class Constants {
 	public static long JSAPI_TICKET_TIME = 0;
 	public static final int VALIDTIME = 6000000;
 	public static long ACCESSTOKENBEGIN = 0;
+
+	public static String DEFAULT_HEAD_IMG_PATH = "images/user_default.png";
+	public static String ADVISER_EMAIL = "zhengweiyu@letspogo.com";
+
 }

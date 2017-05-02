@@ -18,6 +18,9 @@ public class SwyUserBasic {
 	
 	@Column
 	private String nickname;
+
+	@Column("head_img_path")
+	private String headImgPath;
 	
 	@Column("register_time")
 	private Date registerTime;
@@ -55,6 +58,14 @@ public class SwyUserBasic {
 
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
+	}
+
+	public String getHeadImgPath() {
+		return headImgPath;
+	}
+
+	public void setHeadImgPath(String headImgPath) {
+		this.headImgPath = headImgPath;
 	}
 
 	public Date getRegisterTime() {

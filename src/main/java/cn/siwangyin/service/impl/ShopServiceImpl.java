@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 import cn.siwangyin.domainObject.*;
+import cn.siwangyin.system.Constants;
 import cn.siwangyin.system.SwyQueryResult;
 import org.nutz.dao.*;
 
@@ -34,6 +35,7 @@ public class ShopServiceImpl implements ShopService {
 			sub.setEmail(email);
 			sub.setNickname(nickname);
 			sub.setPassword(password);
+			sub.setHeadImgPath(Constants.DEFAULT_HEAD_IMG_PATH);
 			sub.setRegisterTime(new Date());
 			sub.setState('Y');
 			SwyUserBasic newOne = dao.insert(sub);
