@@ -146,7 +146,7 @@ public class ManageModule {
         if (checkLogin(session)) {
             String path = Mvcs.getNutConfig().getAppRoot();
             String time = SwyUtil.getOrderTime(new Date());
-            String fileName = time + "_" + tempFile.getMeta().getFileLocalName();
+            String fileName = time + "_" + tempFile.getFile().getName();
             if (currentImgPath == null || currentImgPath.equals("")) {
                 currentImgPath = "upload/" + fileName;
             }else{
