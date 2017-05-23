@@ -9,6 +9,7 @@
     <link rel="stylesheet"  href="./stylesheets/bootstrap.min.css">
     <!--<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">-->
     <link rel='stylesheet' href='./stylesheets/style.css' />
+    <link rel='stylesheet' href='./stylesheets/onlineService.css' />
     <script src="./javascripts/jquery.min.js"></script>
     <script src="./javascripts/bootstrap.min.js"></script>
     <script src="./javascripts/function.js"></script>
@@ -16,113 +17,10 @@
     <script src="./javascripts/react-with-addons.min.js"></script>
     <script src="./javascripts/react-dom.min.js"></script>
 </head>
-<style>
-    .online-service-div{
-        padding: 5px;
-    }
-    .input-container{
-        height:100px;
-        position: fixed;
-        bottom:0;
-        width:calc(100% - 10px);
-    }
-    .input-container textarea{
-        width:calc(100% - 70px);
-        height: 100px;
-        float: left;
-        resize: none;
-        outline: none;
-        border-radius: 3px;
-        border: 1px solid #ccc;
-    }
-    .input-container textarea:focus{
-        border: 1px solid #8daacc;
-        -moz-box-shadow: inset 0 0 5px #8daacc;
-        -webkit-box-shadow: inset 0 0 5px #8daacc;
-        box-shadow: inset 0 0 5px #8daacc;
-    }
-    .input-container #send{
-        width: 60px;
-        margin: 0 5px;
-        height: 100px;
-        float: left;
-    }
-    .content-container{
-        width:calc(100% - 10px);
-        padding: 5px 10px;
-        border-radius: 3px;
-        border: 2px solid #ccc;
-        overflow-y: auto;
-        position: fixed;
-        bottom:120px;
-        top:10px;
-    }
-    .self, .other{
-        width:100%;
-        min-height:100px;
-    }
-    .self img, .other img{
-        float: left;
-        width: 30px;
-        height: 30px;
-    }
-    .self .content-dialog, .other .content-dialog{
-        float: left;
-        font-size:12px;
-        background-color: #ccc;
-        color: #000;
-        padding:3px 5px;
-        border-radius: 3px;
-        line-height: 24px;
-        margin-left:10px;
-        position: relative;
-    }
-    .self .content-dialog{
-        background-color: #03ff06;
-    }
-    .time{
-        display: inline-block;
-        width:100%;
-        height:24px;
-        line-height:24px;
-        float: left;
-    }
-    .left-arrow{
-        left: -25px;
-        border-right-color: #999;
-        border-left-width: 0;
-        border-width: 11px;
-        position: absolute;
-        display: block;
-        width: 0;
-        height: 0;
-        border-color: transparent;
-        border-style: solid;
-    }
-    .left-arrow:after{
-        position: absolute;
-        display: block;
-        width: 0;
-        height: 0;
-        border-color: transparent;
-        border-style: solid;
-        bottom: -10px;
-        left: 1px;
-        content: " ";
-        border-left-width: 0;
-        content: "";
-        border-width: 7px;
-    }
-    .self .left-arrow::after{
-        border-right-color: #03ff06;
-    }
-    .other .left-arrow::after{
-        border-right-color: #ccc;
-    }
-</style>
 <body id="body"></body>
+
 <script>
     var _socket = 'ws://localhost:8080/screenprinting/websocket';
 </script>
-<script src="./react/build/onlineService_build.js"></script>
+<script src="./react/build/onlineServiceAdmin_build.js"></script>
 </html>

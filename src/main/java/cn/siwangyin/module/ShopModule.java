@@ -49,6 +49,20 @@ public class ShopModule {
         return swyQueryResult;
     }
 
+    @At
+    @Ok("json")
+    public SwyQueryResult checkLoginAdmin(HttpSession session) {
+        SwyQueryResult swyQueryResult = new SwyQueryResult();
+        SwyUserBasic sub = (SwyUserBasic) session.getAttribute("user");
+        if (sub != null || sub.getEmail().equals("quhongyu@letspogo.com")) {
+            swyQueryResult.getMap().put("msg","success");
+            swyQueryResult.getMap().put("user",sub);
+        }else{
+            swyQueryResult.getMap().put("msg","login");
+        }
+        return swyQueryResult;
+    }
+
 	@At
 	@Ok("json")
 	public String register(HttpSession session, @Param("email") String email, @Param("nickname") String nickname, @Param("password") String password) {
