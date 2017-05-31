@@ -54,7 +54,7 @@ public class ShopModule {
     public SwyQueryResult checkLoginAdmin(HttpSession session) {
         SwyQueryResult swyQueryResult = new SwyQueryResult();
         SwyUserBasic sub = (SwyUserBasic) session.getAttribute("user");
-        if (sub != null || sub.getEmail().equals("quhongyu@letspogo.com")) {
+        if (sub != null && sub.getEmail().equals("quhongyu@letspogo.com")) {
             swyQueryResult.getMap().put("msg","success");
             swyQueryResult.getMap().put("user",sub);
         }else{

@@ -25,7 +25,7 @@ var OnlineService = React.createClass({
                 } else if (data.map.msg === "success") {
                     var websocket = new WebSocket(this.state.socketServer);
                     websocket.onopen = function (event) {
-                        var message = { from: data.map.user.email, to: "", message: "", successState: "", errorMessage: "", date: "" };
+                        var message = { from: data.map.user.email, fromNickname: data.map.user.nickname, to: "", message: "", successState: "", errorMessage: "", date: "" };
                         if (websocket.readyState == websocket.OPEN) {
                             websocket.send(JSON.stringify(message));
                         }
@@ -38,11 +38,11 @@ var OnlineService = React.createClass({
                         for (var i = 0; i < this.state.contentArray.length; i++) {
                             array.push(this.state.contentArray[i]);
                         }
-                        if (typeof message == "object" && message.length > 0) {
+                        if (typeof message[0] === "object") {
                             for (var i = 0; i < message.length; i++) {
                                 array.push(message[i]);
                             }
-                        } else {
+                        } else if (message.from) {
                             array.push(message);
                         }
                         this.setState({ contentArray: array });
@@ -54,10 +54,12 @@ var OnlineService = React.createClass({
     },
     textSubmit: function (text) {
         var from = this.state.user.email;
-        var to = "adviser";
+        var fromNickname = this.state.user.nickname;
+        var to = "quhongyu@letspogo.com";
         var socket = this.state.socket;
         var message = {
             from: from,
+            fromNickname: fromNickname,
             to: to,
             message: text
         };
@@ -89,19 +91,20 @@ var ContentBoard = React.createClass({
     componentWillReceiveProps(props) {
         this.setState({ user: props.user, contentArray: props.content });
     },
+    componentDidUpdate() {
+        document.getElementById('content-container').scrollTop = document.getElementById('content-container').scrollHeight;
+    },
     render: function () {
         var divs = [];
         var array = this.state.contentArray;
         var user = this.state.user;
-        console.log("------user-------");
-        console.log(user);
         for (var i = 0; i < array.length; i++) {
             var message = array[i];
             if (message.from == user.email) {
                 divs.push(React.createElement(
                     "div",
                     { className: "self" },
-                    React.createElement("img", { src: user.headImgPath }),
+                    React.createElement("img", { src: "images/user_default.png" }),
                     React.createElement(
                         "span",
                         { className: "content-dialog" },
@@ -143,7 +146,7 @@ var ContentBoard = React.createClass({
         }
         return React.createElement(
             "div",
-            { className: "content-container" },
+            { className: "content-container", id: "content-container" },
             divs
         );
     }
@@ -176,12 +179,7 @@ var EditBoard = React.createClass({
         );
     }
 });
-var _content = [{ from: "522381613@qq.com", to: "adviser", message: "text1", successState: "success", errorMessage: "", date: "2017-04-24 11:18:32" }, { from: "adviser", to: "522381613@qq.com", message: "text2", successState: "success", errorMessage: "", date: "2017-04-24 11:18:32" }, { from: "522381613@qq.com", to: "adviser", message: "text3", successState: "success", errorMessage: "", date: "2017-04-24 11:18:32" }, { from: "522381613@qq.com", to: "adviser", message: "text4", successState: "success", errorMessage: "", date: "2017-04-24 11:18:32" }, { from: "522381613@qq.com", to: "adviser", message: "text5", successState: "success", errorMessage: "", date: "2017-04-24 11:18:32" }, { from: "adviser", to: "522381613@qq.com", message: "text6", successState: "success", errorMessage: "", date: "2017-04-24 11:18:32" }, { from: "522381613@qq.com", to: "adviser", message: "text7", successState: "success", errorMessage: "", date: "2017-04-24 11:18:32" }];
-var _user = {
-    email: "522381613@qq.com",
-    nickname: "Z_Fiend",
-    headImgPath: "images/user_default.png"
-};
-ReactDOM.render(React.createElement(OnlineService, { content: _content, user: _user }), document.getElementById("body"));
+
+ReactDOM.render(React.createElement(OnlineService, null), document.getElementById("body"));
 
 },{}]},{},[1]);

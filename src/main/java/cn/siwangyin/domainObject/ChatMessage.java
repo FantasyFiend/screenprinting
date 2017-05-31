@@ -18,6 +18,9 @@ public class ChatMessage {
     @Column("from_user_email")
     private String from;
 
+    @Column("from_nickname")
+    private String fromNickname;
+
     @Column("to_user_email")
     private String to;
 
@@ -88,5 +91,13 @@ public class ChatMessage {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getFromNickname() {
+        return fromNickname;
+    }
+
+    public void setFromNickname(String fromNickname) {
+        this.fromNickname = fromNickname;
     }
 }

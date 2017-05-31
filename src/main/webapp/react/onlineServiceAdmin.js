@@ -4,56 +4,81 @@
 var OnlineServiceAdmin = React.createClass({
     getInitialState:function(){
         return {
-            customerList:this.props.customerList,
-            activeCustomer:this.props.activeCustomer,
+            customerList:[],
+            activeCustomer:null,
             socketServer:_socket,
             socket:null,
-            user:this.props.user,
-            contentArray:this.props.contentArray
+            user:null,
+            contentArray:[]
         }
     },
     componentWillMount:function(){
-        // $.ajax({
-        //     type:"get",
-        //     url:"service/shop/checkLoginAdmin",
-        //     success:function (data) {
-        //         if (data.map.msg === "login"){
-        //             alert("登陆管理员账户后即可使用在线客服功能！");
-        //             setCookie("swyFrom",window.location.href);
-        //             window.location.href = "login.html";
-        //         }else if(data.map.msg === "success"){
-        //             var websocket = new WebSocket(this.state.socketServer);
-        //             websocket.onopen = function (event) {
-        //                 var message = {from:data.map.user.email, to:"", message:"", successState:"", errorMessage:"", date:""};
-        //                 if (websocket.readyState == websocket.OPEN) {
-        //                     websocket.send(JSON.stringify(message));
-        //                 }
-        //                 this.setState({socket:websocket, user:data.map.user});
-        //             }.bind(this);
-        //             websocket.onclose = function (event) {
-        //
-        //             };
-        //             websocket.onmessage = function (event) {
-        //                 var message = JSON.parse(event.data);
-        //                 var array = new Array();
-        //                 for (var i = 0; i < this.state.contentArray.length; i++) {
-        //                     array.push(this.state.contentArray[i]);
-        //                 }
-        //                 if (typeof (message) == "object" && message.length > 0) {
-        //                     for(var i = 0; i < message.length; i++) {
-        //                         array.push(message[i]);
-        //                     }
-        //                 }else{
-        //                     array.push(message);
-        //                 }
-        //                 this.setState({contentArray:array});
-        //             }.bind(this);
-        //             websocket.onerror = function (event) {
-        //
-        //             };
-        //         }
-        //     }.bind(this)
-        // });
+        $.ajax({
+            type:"get",
+            url:"service/shop/checkLoginAdmin",
+            success:function (data) {
+                if (data.map.msg === "login"){
+                    alert("登陆管理员账户后即可使用在线客服功能！");
+                    setCookie("swyFrom",window.location.href);
+                    window.location.href = "login.html";
+                }else if(data.map.msg === "success"){
+                    var websocket = new WebSocket(this.state.socketServer);
+                    websocket.onopen = function (event) {
+                        var message = {from:data.map.user.email, fromNickname:data.map.user.nickname, to:"", message:"", successState:"", errorMessage:"", date:""};
+                        if (websocket.readyState == websocket.OPEN) {
+                            websocket.send(JSON.stringify(message));
+                        }
+                        this.setState({socket:websocket, user:data.map.user});
+                    }.bind(this);
+                    websocket.onclose = function (event) {
+
+                    };
+                    websocket.onmessage = function (event) {
+                        var message = JSON.parse(event.data);
+                        var array = new Array();
+                        var customerList = this.state.customerList;
+                        for (var i = 0; i < this.state.contentArray.length; i++) {
+                            array.push(this.state.contentArray[i]);
+                        }
+                        if (typeof (message[0]) === "object") {
+                            for(var i = 0; i < message.length; i++) {
+                                array.push(message[i]);
+                                existed = false;
+                                for (var j = 0; j < customerList.length; j++) {
+                                    var customer = customerList[j];
+                                    if (customer.email === message[i].from) {
+                                        customer.messageCount++;
+                                        existed = true;
+                                        break;
+                                    }
+                                }
+                                if (!existed) {
+                                    customerList.push({email:message[i].from, nickname: message[i].fromNickname, headImgPath:"images/user_default.png",messageCount:1});
+                                }
+                            }
+                        }else if (message.from){
+                            array.push(message);
+                            var existed = false;
+                            for (var j = 0; j < customerList.length; j++) {
+                                var customer = customerList[j];
+                                if (customer.email === message.from) {
+                                    customer.messageCount++;
+                                    existed = true;
+                                    break;
+                                }
+                            }
+                            if (!existed && message.from !== this.state.user.email) {
+                                customerList.push({email:message.from, nickname: message.fromNickname, headImgPath:"images/user_default.png",messageCount:1});
+                            }
+                        }
+                        this.setState({contentArray:array});
+                    }.bind(this);
+                    websocket.onerror = function (event) {
+
+                    };
+                }
+            }.bind(this)
+        });
     },
     selectCustomer:function(newList, email) {
         this.setState({customerList: newList, activeCustomer:email});
@@ -75,11 +100,7 @@ var OnlineServiceAdmin = React.createClass({
     },
     render:function () {
         var customer = this.state.activeCustomer;
-        if (customer == null) {
-            customer = this.state.customerList[0].email;
-        }
         var newArray = [];
-        console.log(this.state.contentArray);
         for (var i = 0; i < this.state.contentArray.length; i++) {
             var content = this.state.contentArray[i];
             if (content.from === customer || content.to === customer) {
@@ -179,6 +200,9 @@ var ContentBoard = React.createClass({
     componentWillReceiveProps(props) {
         this.setState({user:props.user, contentArray: props.content});
     },
+    componentDidUpdate(){
+        document.getElementById('content-container').scrollTop = document.getElementById('content-container').scrollHeight;
+    },
     render:function(){
         var divs = [];
         var array = this.state.contentArray;
@@ -186,12 +210,12 @@ var ContentBoard = React.createClass({
         for (var i = 0; i < array.length; i++) {
             var message = array[i];
             if (message.from == user.email) {
-                divs.push(<div className="self"><img src={user.headImgPath}/><span className="content-dialog"><span className="left-arrow"></span><span className="time">{message.date}</span><span>{message.message}</span></span></div>);
+                divs.push(<div className="self"><img src="images/user_admin.jpg"/><span className="content-dialog"><span className="left-arrow"></span><span className="time">{message.date}</span><span>{message.message}</span></span></div>);
             }else{
                 divs.push(<div className="other"><img src="images/user_default.png"/><span className="content-dialog"><span className="left-arrow"></span><span className="time">{message.date}</span><span>{message.message}</span></span></div>);
             }
         }
-        return <div className="content-container">{divs}</div>;
+        return <div className="content-container" id="content-container">{divs}</div>;
     }
 });
 
@@ -211,39 +235,5 @@ var EditBoard = React.createClass({
         return <div className="input-container"><textarea id="textarea" placeholder="Ctrl+Enter键发送，Enter键换行" onKeyDown={this.handleKeyDown}></textarea><button onClick={this.sendMessage} id="send">发送</button></div>;
     }
 });
-var _list = [
-    {
-        email:"522381611@qq.com",
-        nickname:"Z_Fiend1",
-        headImgPath:"images/user_default.png",
-        messageCount:1
-    },
-    {
-        email:"522381612@qq.com",
-        nickname:"Z_Fiend2",
-        headImgPath:"images/user_default.png",
-        messageCount:0
-    },
-    {
-        email:"522381613@qq.com",
-        nickname:"Z_Fiend",
-        headImgPath:"images/user_default.png",
-        messageCount:2
-    }
-];
-var _activeCustomer = "522381612@qq.com";
-var _user = {
-    email:"quhongyu@letspogo.com",
-    nickname:"Z_Fiend",
-    headImgPath:"images/user_admin.jpg"
-};
-var _content = [
-    {from:"522381613@qq.com",to:"quhongyu@letspogo.com", message:"text1", successState:"success", errorMessage:"", date:"2017-04-24 11:18:32"},
-    {from:"quhongyu@letspogo.com",to:"522381613@qq.com", message:"text2", successState:"success", errorMessage:"", date:"2017-04-24 11:18:32"},
-    {from:"522381613@qq.com",to:"quhongyu@letspogo.com", message:"text3", successState:"success", errorMessage:"", date:"2017-04-24 11:18:32"},
-    {from:"522381613@qq.com",to:"quhongyu@letspogo.com", message:"text4", successState:"success", errorMessage:"", date:"2017-04-24 11:18:32"},
-    {from:"522381613@qq.com",to:"quhongyu@letspogo.com", message:"text5", successState:"success", errorMessage:"", date:"2017-04-24 11:18:32"},
-    {from:"quhongyu@letspogo.com",to:"522381613@qq.com", message:"text6", successState:"success", errorMessage:"", date:"2017-04-24 11:18:32"},
-    {from:"522381613@qq.com",to:"quhongyu@letspogo.com", message:"text7", successState:"success", errorMessage:"", date:"2017-04-24 11:18:32"},
-];
-ReactDOM.render(<OnlineServiceAdmin contentArray={_content} user={_user} activeCustomer={_activeCustomer} customerList={_list}/>, document.getElementById("body"));
+
+ReactDOM.render(<OnlineServiceAdmin />, document.getElementById("body"));

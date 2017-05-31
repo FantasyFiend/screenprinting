@@ -3,6 +3,7 @@ package cn.siwangyin.chat;
 import cn.siwangyin.config.IocConfig;
 import cn.siwangyin.domainObject.ChatMessage;
 import cn.siwangyin.system.Constants;
+import org.nutz.dao.Chain;
 import org.nutz.dao.Cnd;
 import org.nutz.dao.Condition;
 import org.nutz.dao.Dao;
@@ -67,6 +68,8 @@ public class ChatServer {
             List<ChatMessage> list = dao.query(ChatMessage.class, cnd);
             try {
                 sendMessage(Json.toJson(list));
+                Chain chain = Chain.make("successState", "success");
+                dao.update(ChatMessage.class, chain, cnd);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -74,9 +77,9 @@ public class ChatServer {
         }
 
         //发消息给用户
-        if (cm.getTo().equals("adviser")) {
-            cm.setTo(Constants.ADVISER_EMAIL);
-        }
+//        if (cm.getTo().equals("adviser")) {
+//            cm.setTo(Constants.ADVISER_EMAIL);
+//        }
         cm.setDate(new Date());
         cm.setSuccessState("sending");
         for(ChatServer item: webSocketSet){
