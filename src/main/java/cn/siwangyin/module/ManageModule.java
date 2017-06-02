@@ -193,4 +193,26 @@ public class ManageModule {
         }
         return sqr;
     }
+
+    @At
+    @Ok("json")
+    public SwyQueryResult addBlog(HttpSession session, @Param("seriesId") int seriesId, @Param("name") String name, @Param("author") String author, @Param("html") String html) {
+        SwyQueryResult sqr = new SwyQueryResult();
+        if (!checkLogin(session)) {
+            sqr.getMap().put("msg","login");
+        }else{
+            SwyArticle sa = new SwyArticle();
+            sa.setSeriesId(seriesId);
+            sa.setName(name);
+            sa.setAuthor(author);
+            System.out.println("html代码长度：" + html.length());
+            sa.setContent(html);
+            sa.setTime(new Date());
+            sa.setState('Y');
+            sa = manageService.addArticle(sa);
+            sqr.getMap().put("msg","success");
+            sqr.getMap().put("article",sa);
+        }
+        return sqr;
+    }
 }

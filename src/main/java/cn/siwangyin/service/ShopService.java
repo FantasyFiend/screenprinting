@@ -45,4 +45,8 @@ public interface ShopService {
     List<SwyOrder> getOrderList(int userId, char type);
 
     void deleteOrder(int id);
+
+    SwyArticle getArticle(int id);
+
+    List<SwyComment> getCommentsByArticleId(int articleId);
 }

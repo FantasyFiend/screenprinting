@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加文章</title>
+    <link rel="stylesheet"  href="./stylesheets/bootstrap.min.css">
+    <link rel='stylesheet' href='./stylesheets/style.css' />
+    <script src="./javascripts/jquery.min.js"></script>
+    <script src="./ckeditor/ckeditor.js"></script>
+    <script src="./javascripts/function.js"></script>
+</head>
+<body>
+<div><label for="seriesId">系列</label><input type="text" id="seriesId"/></div>
+<div><label for="name">题目</label><input type="text" id="name"/></div>
+<div><label for="author">作者</label><input type="text" id="author"/></div>
+<div>
+    <label for="editor1">文章内容</label>
+    <textarea name="editor1" id="editor1" rows="10" cols="80"></textarea>
+</div>
+<div class="input-group" style="margin-top: 20px;"><button id="submitButton">提交</button></div>
+</body>
+<script>
+    $(document).ready(function(){
+        CKEDITOR.replace( 'editor1' );
+        $("#submitButton").on("click", function () {
+            var html = CKEDITOR.instances['editor1'].getData();
+            var seriesId = $("#seriesId").val();
+            var name = $("#name").val();
+            var author = $("#author").val();
+            $.ajax({
+                type:"post",
+                url:"service/manage/addBlog",
+                data:{seriesId:seriesId, name:name, author:author, html:html},
+                success:function (data) {
+                    console.log(data);
+                    if (data.map.msg === "login"){
+                        alert("请登陆管理员账户！");
+                        setCookie("swyFrom",window.location.href);
+                        window.location.href = "login.html";
+                    }else if (data.map.article.id > 0){
+                        alert("success");
+                    }
+                }
+            })
+        });
+    });
+</script>
+</html>

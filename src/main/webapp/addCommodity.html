@@ -106,10 +106,17 @@
             var stock = $("#stock").val();
             $.ajax({
                 type:"post",
-                url:"service/manage/addCommodity",
+                url:"service/manage/addBlog",
                 data:{commodityNumber:commodityNumber, name:name, price:price, description:description, stock:stock, tagNames:tagNames, html:html},
                 success:function (data) {
+                    console.log(data);
+                    if (data.map.msg === "login"){
+                        alert("请登陆管理员账户！");
+                        setCookie("swyFrom",window.location.href);
+                        window.location.href = "login.html";
+                    }else{
 
+                    }
                 }
             })
         });

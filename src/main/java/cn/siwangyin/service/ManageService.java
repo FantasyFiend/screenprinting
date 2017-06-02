@@ -21,4 +21,6 @@ public interface ManageService {
     void addNewTag();
 
     SwyCommodity addCommodity(SwyCommodity sc);
+
+    SwyArticle addArticle(SwyArticle sa);
 }

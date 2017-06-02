@@ -315,4 +315,22 @@ public class ShopModule {
         }
         return sqr;
     }
+
+    @At
+    @Ok("json")
+    public SwyQueryResult getArticle(@Param("id") int id) {
+        SwyQueryResult sqr = new SwyQueryResult();
+        SwyArticle sa = shopService.getArticle(id);
+        sqr.getMap().put("article", sa);
+        return sqr;
+    }
+
+    @At
+    @Ok("json")
+    public SwyQueryResult getCommentsByArticleId(@Param("articleId") int articleId) {
+        SwyQueryResult sqr = new SwyQueryResult();
+        List<SwyComment> list = shopService.getCommentsByArticleId(articleId);
+        sqr.setList(list);
+        return sqr;
+    }
 }

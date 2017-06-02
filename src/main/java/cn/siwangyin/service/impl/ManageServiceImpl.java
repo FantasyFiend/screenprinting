@@ -1,6 +1,7 @@
 package cn.siwangyin.service.impl;
 
 import cn.siwangyin.config.IocConfig;
+import cn.siwangyin.domainObject.SwyArticle;
 import cn.siwangyin.domainObject.SwyCommodity;
 import cn.siwangyin.domainObject.SwyNavType;
 import cn.siwangyin.domainObject.SwyTag;
@@ -59,5 +60,10 @@ public class ManageServiceImpl implements ManageService{
     @Override
     public SwyCommodity addCommodity(SwyCommodity sc) {
         return dao.insert(sc);
+    }
+
+    @Override
+    public SwyArticle addArticle(SwyArticle sa) {
+        return dao.insert(sa);
     }
 }

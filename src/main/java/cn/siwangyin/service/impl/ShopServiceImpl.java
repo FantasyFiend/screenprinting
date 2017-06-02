@@ -217,4 +217,39 @@ public class ShopServiceImpl implements ShopService {
         dao.update(SwyOrder.class, chain, cnd);
     }
 
+	@Override
+	public SwyArticle getArticle(int id) {
+		return dao.fetch(SwyArticle.class, id);
+	}
+
+	@Override
+	public List<SwyComment> getCommentsByArticleId(int articleId) {
+		Condition cnd = Cnd.where("articleId", "=", articleId).and("state", "=", 'Y').asc("floor").asc("time");
+		List<SwyComment> list = dao.query(SwyComment.class, cnd);
+		List<SwyComment> returnList = new ArrayList<>();
+		//把所有顶级楼层加入list
+		for (int i = 0; i < list.size(); i++) {
+		    SwyComment comment = list.get(i);
+		    if (comment.isFloorComment()) {
+		        comment.setChildren(new ArrayList<>());
+		        returnList.add(comment);
+            }
+        }
+        //为每个顶级楼层添加子评论
+        for (int i = 0; i < returnList.size(); i++) {
+		    SwyComment comment = returnList.get(i);
+		    int floor = comment.getFloor();
+		    List<SwyComment> children = comment.getChildren();
+		    for (int j = 0; j < list.size(); j++) {
+		        if (list.get(j).getFloor() == floor && list.get(j).getId() != comment.getId()) {
+		            children.add(list.get(j));
+                }
+                if (list.get(j).getFloor() > floor) {
+		            break;
+                }
+            }
+        }
+		return returnList;
+	}
+
 }
