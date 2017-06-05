@@ -7,6 +7,7 @@ var Nav = React.createClass({
 		return {
 			user:null,
 			list:[],
+			blogList:[],
 			count:0
 		};
 	},
@@ -15,12 +16,13 @@ var Nav = React.createClass({
 			type:"get",
 			url:"service/shop/getSessionUserAndNavType",
 			success:function(data){
-				this.setState({user:data.map.user, list:data.list, count:data.map.count});
+				this.setState({user:data.map.user, list:data.list, blogList:data.map.blogList, count:data.map.count});
 			}.bind(this)
 		});
 	},
 	render:function(){
 		var lis = [];
+		var blogLis = [];
 		for (var i = 0; i < this.state.list.length; i++) {
 			var type = this.state.list[i];
 			if (type.parentId === 0) {
@@ -34,6 +36,21 @@ var Nav = React.createClass({
 				lis.push(<li role="separator" className="divider"></li>);
 			}
 		}
+        for (var i = 0; i < this.state.blogList.length; i++) {
+            var type = this.state.blogList[i];
+            if (type.parentId === 0) {
+                blogLis.push(<li><a href={type.href} className="dropdown-header">{type.text}</a></li>);
+                for (var j = 0; j < this.state.blogList.length; j++) {
+                    var child = this.state.blogList[j];
+                    if (child.parentId === type.id) {
+                        blogLis.push(<li><a href={child.href}>{child.text}</a></li>);
+                    }
+                }
+                blogLis.push(<li role="separator" className="divider"></li>);
+            }
+        }
+        lis.pop();
+        blogLis.pop();
 		var login = new Object();
 		if (this.state.user == null) {
 			login.href = "login.html";
@@ -61,6 +78,14 @@ var Nav = React.createClass({
 				                        </ul>
 				                    </li>
 				                </ul>
+								<ul className="nav navbar-nav">
+									<li className="dropdown">
+										<a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">资料<span className="caret"></span></a>
+										<ul className="dropdown-menu">
+                                            {blogLis}
+										</ul>
+									</li>
+								</ul>
 				                <ul className="nav navbar-nav navbar-right">
 				                    <li><a href={login.href}>{this.state.user == null ? "登录" : this.state.user.nickname}</a></li>
 				                    <li><a href="cart.html"><span className="glyphicon glyphicon-shopping-cart"></span>&nbsp;&nbsp;<span className="badge" id="cartBadge">{this.state.count}</span></a></li>

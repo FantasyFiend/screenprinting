@@ -33,6 +33,7 @@ var OnlineService = React.createClass({
                     };
                     websocket.onmessage = function (event) {
                         var message = JSON.parse(event.data);
+                        console.log(message);
                         var array = new Array();
                         for (var i = 0; i < this.state.contentArray.length; i++) {
                             array.push(this.state.contentArray[i]);

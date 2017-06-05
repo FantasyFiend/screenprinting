@@ -1,6 +1,9 @@
 package cn.siwangyin.service.impl;
 
 import java.io.UnsupportedEncodingException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
 
 import cn.siwangyin.domainObject.*;
@@ -10,6 +13,8 @@ import org.nutz.dao.*;
 
 import cn.siwangyin.config.IocConfig;
 import cn.siwangyin.service.ShopService;
+import org.nutz.dao.sql.Sql;
+import org.nutz.dao.sql.SqlCallback;
 import org.nutz.json.Json;
 import org.nutz.lang.Lang;
 
@@ -250,6 +255,52 @@ public class ShopServiceImpl implements ShopService {
             }
         }
 		return returnList;
+	}
+
+	@Override
+	public List<SwyComment> addMainComment(int articleId, String content, String commentBy) {
+        Sql sql = Sqls.create("select max(floor) from swy_comment where article_id = " + articleId);
+        sql.setCallback((conn, rs, sql1) -> {
+            int floor = 0;
+            while (rs.next())
+                floor = rs.getInt("max(floor)");
+            return floor;
+        });
+        dao.execute(sql);
+        int floor = sql.getInt();
+		SwyComment comment = new SwyComment();
+		comment.setArticleId(articleId);
+		comment.setContent(content);
+		comment.setCommentBy(commentBy);
+		comment.setFloorComment(true);
+		comment.setTime(new Date());
+		comment.setFloor(++floor);
+		comment.setState('Y');
+		dao.insert(comment);
+		return getCommentsByArticleId(articleId);
+	}
+
+	@Override
+	public List<SwyNewsType> getNewsTypeList() {
+		Condition cnd = Cnd.where("state", "=", 'Y').asc("id");
+		List<SwyNewsType> list = dao.query(SwyNewsType.class, cnd);
+		return list;
+	}
+
+	@Override
+	public SwyArticleSeries getSeries(int seriesId) {
+		return dao.fetch(SwyArticleSeries.class, seriesId);
+	}
+
+	@Override
+	public List<SwyArticle> getArticleBySeriesId(int seriesId) {
+		Condition cnd = Cnd.where("state", "=", 'Y').and("seriesId","=",seriesId).asc("id");
+		List<SwyArticle> list = dao.query(SwyArticle.class, cnd);
+		for (int i = 0; i < list.size(); i++) {
+			SwyArticle article = list.get(i);
+			article.setContent("");
+		}
+		return list;
 	}
 
 }

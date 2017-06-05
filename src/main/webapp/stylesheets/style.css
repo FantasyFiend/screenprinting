@@ -363,3 +363,65 @@
 .article-content{
     padding-left: 10px;
 }
+.comments-total-container{
+    margin-top:30px;
+}
+.comments-total-container-title{
+    height: 50px;
+    line-height:50px;
+    font-size:30px;
+    border-bottom:2px solid #000;
+}
+.comments-section{
+    margin-top:20px;
+    background-color: #f0ffe8;
+    padding:5px 10px;
+    font-size: 12px;
+}
+.comment-floor{
+    margin:10px 0;
+    background-color: #fff;
+    border:1px solid #f0ffe8;
+    border-radius:2px;
+}
+.comment-sub-floor, .comment-main-floor{
+    padding-top:10px;
+    padding-bottom:10px;
+    padding-left:10px;
+}
+.comment-sub-floor{
+    padding-left:50px;
+    border-top:1px solid #eee;
+}
+.floor-content-span{
+    display: block;
+    font-size: 14px;
+}
+.floor-time-span{
+    display: block;
+    text-align: right;
+    padding-right: 30px;
+    color:#aaa;
+}
+.publish-section{
+    margin-top:30px;
+}
+.publish-section textarea{
+    width:90%;
+    height:150px;
+    float: left;
+}
+.publish-section button{
+    float:left;
+    margin-top:100px;
+    height:50px;
+    margin-left:20px;
+}
+.series-title{
+    margin-bottom:20px;
+    font-size:20px;
+}
+.series-title .series-description{
+    font-size:14px;
+    color:#aaa;
+}

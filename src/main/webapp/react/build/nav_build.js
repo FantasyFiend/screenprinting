@@ -10,6 +10,7 @@ var Nav = React.createClass({
 		return {
 			user: null,
 			list: [],
+			blogList: [],
 			count: 0
 		};
 	},
@@ -18,12 +19,13 @@ var Nav = React.createClass({
 			type: "get",
 			url: "service/shop/getSessionUserAndNavType",
 			success: function (data) {
-				this.setState({ user: data.map.user, list: data.list, count: data.map.count });
+				this.setState({ user: data.map.user, list: data.list, blogList: data.map.blogList, count: data.map.count });
 			}.bind(this)
 		});
 	},
 	render: function () {
 		var lis = [];
+		var blogLis = [];
 		for (var i = 0; i < this.state.list.length; i++) {
 			var type = this.state.list[i];
 			if (type.parentId === 0) {
@@ -53,6 +55,37 @@ var Nav = React.createClass({
 				lis.push(React.createElement("li", { role: "separator", className: "divider" }));
 			}
 		}
+		for (var i = 0; i < this.state.blogList.length; i++) {
+			var type = this.state.blogList[i];
+			if (type.parentId === 0) {
+				blogLis.push(React.createElement(
+					"li",
+					null,
+					React.createElement(
+						"a",
+						{ href: type.href, className: "dropdown-header" },
+						type.text
+					)
+				));
+				for (var j = 0; j < this.state.blogList.length; j++) {
+					var child = this.state.blogList[j];
+					if (child.parentId === type.id) {
+						blogLis.push(React.createElement(
+							"li",
+							null,
+							React.createElement(
+								"a",
+								{ href: child.href },
+								child.text
+							)
+						));
+					}
+				}
+				blogLis.push(React.createElement("li", { role: "separator", className: "divider" }));
+			}
+		}
+		lis.pop();
+		blogLis.pop();
 		var login = new Object();
 		if (this.state.user == null) {
 			login.href = "login.html";
@@ -108,6 +141,25 @@ var Nav = React.createClass({
 									"ul",
 									{ className: "dropdown-menu" },
 									lis
+								)
+							)
+						),
+						React.createElement(
+							"ul",
+							{ className: "nav navbar-nav" },
+							React.createElement(
+								"li",
+								{ className: "dropdown" },
+								React.createElement(
+									"a",
+									{ href: "#", className: "dropdown-toggle", "data-toggle": "dropdown", role: "button", "aria-haspopup": "true", "aria-expanded": "false" },
+									"\u8D44\u6599",
+									React.createElement("span", { className: "caret" })
+								),
+								React.createElement(
+									"ul",
+									{ className: "dropdown-menu" },
+									blogLis
 								)
 							)
 						),

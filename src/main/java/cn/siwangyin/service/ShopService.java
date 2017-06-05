@@ -49,4 +49,12 @@ public interface ShopService {
     SwyArticle getArticle(int id);
 
     List<SwyComment> getCommentsByArticleId(int articleId);
+
+    List<SwyComment> addMainComment(int articleId, String content, String commentBy);
+
+    List<SwyNewsType> getNewsTypeList();
+
+    SwyArticleSeries getSeries(int seriesId);
+
+    List<SwyArticle> getArticleBySeriesId(int seriesId);
 }

@@ -32,6 +32,7 @@ public class ShopModule {
 			swyQueryResult.getMap().put("count", 0);
 		}
 		swyQueryResult.setList(shopService.getNavTypeList());
+		swyQueryResult.getMap().put("blogList", shopService.getNewsTypeList());
 		return swyQueryResult;
 	}
 
@@ -330,6 +331,26 @@ public class ShopModule {
     public SwyQueryResult getCommentsByArticleId(@Param("articleId") int articleId) {
         SwyQueryResult sqr = new SwyQueryResult();
         List<SwyComment> list = shopService.getCommentsByArticleId(articleId);
+        sqr.setList(list);
+        return sqr;
+    }
+
+    @At
+    @Ok("json")
+    public SwyQueryResult addMainComment(@Param("articleId") int articleId, @Param("content") String content, @Param("nickname") String commentBy) {
+        SwyQueryResult sqr = new SwyQueryResult();
+        List<SwyComment> list = shopService.addMainComment(articleId, content, commentBy);
+        sqr.setList(list);
+        return sqr;
+    }
+
+    @At
+    @Ok("json")
+    public SwyQueryResult getSeries(@Param("seriesId") int seriesId) {
+        SwyQueryResult sqr = new SwyQueryResult();
+        SwyArticleSeries sas = shopService.getSeries(seriesId);
+        List<SwyArticle> list = shopService.getArticleBySeriesId(seriesId);
+        sqr.getMap().put("series", sas);
         sqr.setList(list);
         return sqr;
     }
